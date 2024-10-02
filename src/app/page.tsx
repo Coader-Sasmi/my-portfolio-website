@@ -1,7 +1,27 @@
+"use client";
+
+import {
+  AboutMe,
+  ContactUs,
+  Experience,
+  Footer,
+  Hero,
+  Navbar,
+  ResponsiveNavbar,
+  Skills,
+} from "./components";
+
 export default function Home() {
   return (
-    <div className="m-6 rounded-lg p-3 font-semibold text-gray-500 text-lg text-center shadow uppercase">
-      This website design is in progress.
-    </div>
+    <>
+      <Navbar />
+      <ResponsiveNavbar />
+      <Hero />
+      <AboutMe />
+      <Skills />
+      <Experience />
+      <ContactUs />
+      <Footer />
+    </>
   );
 }
