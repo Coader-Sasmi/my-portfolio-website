@@ -104,24 +104,32 @@ type Experience = {
 
 export const experiencesData: Experience[] = [
   {
-    title: "Web Developer Trainee",
-    company: "Innovex Academy, Bhubaneswar, India",
+    title: "Next.js Developer",
+    company: "AIS Technolabs Pvt Ltd, Ahemadabad, India",
     description: (
       <ul className="text-white">
         <li className="mb-2">
-          🚀 Learn and built responsive UI, optimizing pages for fast response
-          using HTML, CSS, JavaScript, ReactJS, Bootstrap 5.
+          🛠️ Specialized in Next.js, Redux, Bootstrap and NextAuth.
         </li>
         <li className="mb-2">
-          🔄 Built reusable components, documented application changes, and
-          worked on multiple projects and updates.
+          🎮 Developed engaging gaming applications using ReactJS,Next.js and
+          TypeScript.
+        </li>
+        <li className="mb-2">
+          ⚡ Ensured optimal performance across various devices and browsers.
+        </li>
+        <li className="mb-2">
+          🤝 Collaborated on E-COMMERCE and CRM Management Systems.
+        </li>
+        <li className="mb-2">
+          ✅ Implemented comprehensive unit testing for robust code quality.
         </li>
       </ul>
     ),
-    date: "2020 - 2021",
+    date: "2024 - Present",
   },
   {
-    title: "Software Developer II",
+    title: "Software Developer",
     company: "SearchingYard Software Pvt. Ltd., Bhubaneswar, India",
     description: (
       <ul className="text-white">
@@ -136,48 +144,32 @@ export const experiencesData: Experience[] = [
         </li>
         <li className="mb-2">🔗 Worked on REST API and API integration.</li>
         <li className="mb-2">
-          🔥 Developed dynamic applications using FIREBASE.
-        </li>
-        <li className="mb-2">
           🧠 Specialized in building logic for maximum performance across a vast
           array of devices and browsers.
         </li>
         <li className="mb-2">
           🤝 Coordinated with the development team and worked on projects like
-          E-COMMERCE, ERP Management System, Inventory Management System, and
-          more.
+          E-COMMERCE, HR Management System, CRM and more.
         </li>
       </ul>
     ),
-    date: "2021 - 2024",
+    date: "2022 - 2024",
   },
   {
-    title: "Next.js Developer",
-    company: "AIS Technolabs Pvt Ltd, Ahemadabad, India",
+    title: "Web Developer Trainee",
+    company: "Innovex Academy, Bhubaneswar, India",
     description: (
       <ul className="text-white">
         <li className="mb-2">
-          🛠️ Specialized in Next.js, Redux, Bootstrap, NextAuth, and Jira Agile
-          methodology.
+          🚀 Learn and built responsive UI, optimizing pages for fast response
+          using HTML, CSS, JavaScript, ReactJS, Bootstrap 5.
         </li>
         <li className="mb-2">
-          🎮 Developed engaging gaming applications using ReactJS,Next.js and
-          TypeScript.
-        </li>
-        <li className="mb-2">
-          ⚡ Ensured optimal performance across various devices and browsers.
-        </li>
-        <li className="mb-2">
-          🤝 Collaborated on E-COMMERCE and ERP Management Systems.
-        </li>
-        <li className="mb-2">
-          ✅ Implemented comprehensive unit testing for robust code quality.
-        </li>
-        <li className="mb-2">
-          🔍 Utilized Jira Agile methodology for effective project management.
+          🔄 Built reusable components, documented application changes, and
+          worked on multiple projects and updates.
         </li>
       </ul>
     ),
-    date: "2024 - Present",
+    date: "2021 - 2022",
   },
 ];
