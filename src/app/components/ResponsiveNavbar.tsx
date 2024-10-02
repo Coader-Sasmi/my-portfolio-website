@@ -9,7 +9,7 @@ import { navLink } from "../config";
 export default function ResponsiveNavbar() {
   const [open, setOpen] = useState(false);
   return (
-    <section className=" block md:hidden p-2 bg-black sticky -top-1 z-[9000]">
+    <section className="main-container block md:hidden py-2 bg-black sticky -top-1 z-[9000]">
       <div className="flex justify-between items-center">
         <Link href="/">
           <span className="flex items-end">

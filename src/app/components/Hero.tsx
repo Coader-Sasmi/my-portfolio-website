@@ -15,7 +15,7 @@ export default function Hero() {
         src="./profile.jpeg"
         className="w-28 h-28 rounded-full border-4 border-secondary"
       />
-      <div className="py-8 font-medium flex flex-col gap-6 md:w-[65%]">
+      <div className="main-container py-8 font-medium flex flex-col gap-6 md:w-[65%]">
         <p className="text-white text-xl">Hi, my name is</p>
         <p className="text-primary md:text-5xl text-3xl">Sasmita Mahanta</p>
         <p className="text-white md:text-5xl text-3xl">

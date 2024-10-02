@@ -33,7 +33,7 @@ export default function ContactForm() {
   });
   return (
     <form onSubmit={formik.handleSubmit}>
-      <div className="flex lg:flex-row flex-col gap-5">
+      <div className="flex lg:flex-row flex-col lg:gap-5">
         <div className=" w-full mt-4">
           <label className="mb-2 block text-sm font-semibold text-secondary ">
             Name*
@@ -103,7 +103,7 @@ export default function ContactForm() {
         </span>
       </div>
 
-      <div className="mt-6">
+      <div className="my-6">
         <button
           className=" bg-primary btn whitespace-nowrap common-transition rounded-md"
           type="submit"

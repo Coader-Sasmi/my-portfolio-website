@@ -8,7 +8,7 @@ export default function MySkills() {
       <div className="main-container text-white flex flex-col gap-6 justify-center items-center ">
         <h5 className="text-primary md:text-4xl text-3xl">MY SKILLS</h5>
 
-        <div className="grid lg:grid-cols-4 place-content-center md:grid-cols-2 grid-cols-1 gap-10  pt-10">
+        <div className="lg:w-[65%] w-full grid lg:grid-cols-4 place-content-center md:grid-cols-2 grid-cols-1 md:gap-10 gap-5  pt-10">
           {skillsArr.map((item, i) => (
             <div
               key={i}

@@ -2,7 +2,7 @@
 
 import {
   AboutMe,
-  ContactUs,
+  Contact,
   Experience,
   Footer,
   Hero,
@@ -20,7 +20,7 @@ export default function Home() {
       <AboutMe />
       <Skills />
       <Experience />
-      <ContactUs />
+      <Contact />
       <Footer />
     </>
   );

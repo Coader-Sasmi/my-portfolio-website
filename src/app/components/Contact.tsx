@@ -2,7 +2,7 @@
 import Link from "next/link";
 import ContactForm from "./ContactForm";
 
-export default function ContactUs() {
+export default function Contact() {
   return (
     <section className="w-full md:pt-24 pt-12" id="contact">
       <div className="main-container text-white flex flex-col gap-6 justify-center items-center">
@@ -18,7 +18,7 @@ export default function ContactUs() {
               mahantasasmita326@gmail.com
             </p>
           </Link>
-          <div className="lg:w-[65%]">
+          <div className="lg:w-[65%] w-full">
             <ContactForm />
           </div>
         </div>
