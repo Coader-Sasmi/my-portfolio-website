@@ -1,9 +1,9 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { skillsArr } from "../config";
 
-// Resume-aligned category groupings — keys matched against skillsArr item titles
 const categories = [
   {
     label: "Frontend",
@@ -32,6 +32,15 @@ const categories = [
   },
 ];
 
+// Normalize logo path: ensures it starts with "/" for next/image compatibility
+function normalizeSrc(src: string): string {
+  if (!src) return src;
+  if (src.startsWith("http://") || src.startsWith("https://")) return src;
+  if (src.startsWith("/")) return src;
+  // Strip leading "./" or "." and prepend "/"
+  return "/" + src.replace(/^\.\//, "").replace(/^\./, "");
+}
+
 export default function MySkills() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
@@ -49,11 +58,11 @@ export default function MySkills() {
   const filteredSkills = activeCategory === "All"
     ? skillsArr
     : skillsArr.filter((item) => {
-      const cat = categories.find((c) => c.label === activeCategory);
-      return cat?.keys.some(
-        (k) => item.title.toLowerCase().includes(k.toLowerCase())
-      );
-    });
+        const cat = categories.find((c) => c.label === activeCategory);
+        return cat?.keys.some(
+          (k) => item.title.toLowerCase().includes(k.toLowerCase())
+        );
+      });
 
   return (
     <>
@@ -120,15 +129,17 @@ export default function MySkills() {
           animation: glow-pulse 2s ease-in-out infinite;
         }
         .skill-card:hover::before { opacity: 1; }
-        .skill-card:hover .skill-logo { animation: logo-float 2s ease-in-out infinite; }
+        .skill-card:hover .skill-logo-wrap { animation: logo-float 2s ease-in-out infinite; }
 
-        .skill-logo {
-          width: 44px; height: 44px;
-          object-fit: contain;
+        .skill-logo-wrap {
+          width: 44px;
+          height: 44px;
+          position: relative;
+          flex-shrink: 0;
           filter: drop-shadow(0 2px 6px rgba(0,0,0,0.4));
           transition: filter 0.3s;
         }
-        .skill-card:hover .skill-logo {
+        .skill-card:hover .skill-logo-wrap {
           filter: drop-shadow(0 4px 10px rgba(99,216,165,0.25));
         }
 
@@ -217,12 +228,15 @@ export default function MySkills() {
         className={`relative w-full lg:pt-28 pt-16 pb-20 overflow-hidden ${visible ? "skills-visible" : ""}`}
         style={{ background: "linear-gradient(180deg, #070c18 0%, #0d1526 100%)" }}
       >
+        {/* Ambient glow */}
         <div className="absolute pointer-events-none" style={{
           width: 600, height: 400, top: "0%", left: "50%",
           transform: "translateX(-50%)",
           background: "radial-gradient(ellipse, rgba(99,216,165,0.04) 0%, transparent 70%)",
           filter: "blur(60px)",
         }} />
+
+        {/* Grid texture */}
         <div className="absolute inset-0 pointer-events-none opacity-[0.02]" style={{
           backgroundImage: `linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px),
                             linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)`,
@@ -230,6 +244,7 @@ export default function MySkills() {
         }} />
 
         <div className="relative z-10 max-w-5xl mx-auto px-6">
+
           {/* Header */}
           <div className="skill-header flex flex-col items-center gap-4 mb-10">
             <span className="section-label">
@@ -291,11 +306,19 @@ export default function MySkills() {
                 style={{ animationDelay: `${i * 55}ms` }}
               >
                 <div className="skill-dot" />
-                <img src={item.logo} alt={item.title} className="skill-logo" />
+                <div className="skill-logo-wrap">
+                  <Image
+                    src={normalizeSrc(item.logo)}
+                    alt={item.title}
+                    fill
+                    style={{ objectFit: "contain" }}
+                  />
+                </div>
                 <p className="skill-name">{item.title}</p>
               </div>
             ))}
           </div>
+
         </div>
       </section>
     </>

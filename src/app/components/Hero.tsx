@@ -6,6 +6,7 @@ import {
   LinkedIn,
   TrendingFlat,
 } from "@mui/icons-material";
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef } from "react";
 
@@ -256,21 +257,28 @@ export default function Hero() {
           </div>
 
           {/* Avatar */}
+          {/* Avatar */}
           <div className="avatar-anim relative" style={{ width: 120, height: 120 }}>
             <div className="spin-ring" />
-            <img
-              src="./profile.jpeg"
-              alt="Sasmita Mahanta"
+            <div
               className="avatar-ring"
               style={{
-                width: 112, height: 112,
+                width: 112,
+                height: 112,
                 borderRadius: "50%",
-                objectFit: "cover",
+                overflow: "hidden",
                 border: "2.5px solid rgba(99,216,165,0.5)",
-                display: "block",
                 margin: "4px auto",
+                position: "relative",
               }}
-            />
+            >
+              <Image
+                src="/profile.jpeg"
+                alt="Sasmita Mahanta"
+                fill
+                style={{ objectFit: "cover" }}
+              />
+            </div>
           </div>
 
           {/* Greeting */}

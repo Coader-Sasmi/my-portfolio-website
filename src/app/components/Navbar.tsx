@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -246,7 +247,7 @@ export default function Navbar() {
       <header className="desk-nav sticky top-0 z-[9000] pt-4 px-4 justify-center nav-root">
         <div className="desk-pill">
           <Link href="/" className="flex items-center gap-2 flex-shrink-0">
-            <img src="./logo.png" alt="logo" style={{ width: 26, height: 26, objectFit: "contain" }} />
+            <Image src="/logo.png" alt="logo" width={26} height={26} style={{ objectFit: "contain" }} />
             <span className="logo-text">
               Sasmita<span className="logo-dot" />dev
             </span>
@@ -276,7 +277,7 @@ export default function Navbar() {
       <nav className={`mob-nav nav-root ${scrolled ? "scrolled" : ""}`}>
         <div className="flex justify-between items-center">
           <Link href="/" className="flex items-center gap-2">
-            <img src="./logo.png" alt="logo" style={{ width: 26, height: 26, objectFit: "contain" }} />
+            <Image src="/logo.png" alt="logo" width={26} height={26} style={{ objectFit: "contain" }} />
             <span className="logo-text">
               Sasmita<span className="logo-dot" />dev
             </span>
@@ -305,7 +306,7 @@ export default function Navbar() {
             ))}
             <div className="mob-drawer-footer">
               <Link href="#contact">
-                <span className="mob-cta">Let's talk →</span>
+                <span className="mob-cta">Let&apos;s talk →</span>
               </Link>
             </div>
           </div>
