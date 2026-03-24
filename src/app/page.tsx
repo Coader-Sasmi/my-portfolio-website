@@ -7,15 +7,13 @@ import {
   Footer,
   Hero,
   Navbar,
-  ResponsiveNavbar,
-  Skills,
+  Skills
 } from "./components";
 
 export default function Home() {
   return (
     <>
       <Navbar />
-      <ResponsiveNavbar />
       <Hero />
       <AboutMe />
       <Skills />

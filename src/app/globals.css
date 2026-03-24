@@ -6,7 +6,7 @@
 * {
   box-sizing: border-box;
   scrollbar-width: thin;
-  scrollbar-color: #cc8b6a transparent;
+  scrollbar-color: #46bf84 transparent;
   scroll-behavior: smooth;
 }
 ::-webkit-scrollbar {
@@ -14,7 +14,7 @@
   height: 0.25em;
 }
 ::-webkit-scrollbar-thumb {
-  background: #cc8b6a;
+  background: #46bf84;
   border-radius: 10em;
 }
 ::-webkit-scrollbar-track {
