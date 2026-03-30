@@ -1,36 +1,142 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<div align="center">
 
-## Getting Started
+# 🚀 Sasmita Mahanta — Personal Portfolio
 
-First, run the development server:
+### Product-focused Frontend Engineer | React · Next.js · TypeScript
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+[![Live Demo](https://img.shields.io/badge/🌐_Live_Demo-Visit_Portfolio-6366F1?style=for-the-badge)](https://my-portfolio-website-blond-two.vercel.app/)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0077B5?style=for-the-badge&logo=linkedin)](https://www.linkedin.com/in/sasmita-mahanta-7b24801a7/)
+[![Gmail](https://img.shields.io/badge/Email-Contact_Me-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:mahantasasmita326@gmail.com)
+
+![Portfolio Preview](https://my-portfolio-website-blond-two.vercel.app/_next/image?url=%2Fprofile.jpeg&w=400&q=75)
+
+</div>
+
+---
+
+## 📌 About This Project
+
+A fully responsive, performance-optimised **personal portfolio website** built with **Next.js 14** and **Tailwind CSS** — designed to showcase my skills, experience, and projects as a Frontend Engineer with 3.8+ years of experience.
+
+The site is deployed on **Vercel** with automatic CI/CD on every push, achieving fast load times and high Lighthouse scores.
+
+---
+
+## ✨ Features
+
+- ⚡ **Next.js App Router** — fast page loads with server-side rendering
+- 🎨 **Framer Motion animations** — smooth section transitions and micro-interactions
+- 📱 **Fully responsive** — optimised for mobile, tablet, and desktop
+- 🌙 **Skills filter system** — interactive category-based skill filtering (Frontend / State / Styling / API / Tools)
+- 📊 **Animated stat counters** — years of experience, users served, performance metrics
+- 📬 **Contact form** — with validation and submission handling
+- 📄 **CV download** — one-click resume download
+- 🔍 **SEO optimised** — meta tags, Open Graph, structured layout
+- ♿ **Accessible** — semantic HTML, keyboard navigable
+
+---
+
+## 🛠️ Built With
+
+| Category | Tech |
+|----------|------|
+| Framework | Next.js 14 (App Router) |
+| Language | TypeScript |
+| Styling | Tailwind CSS |
+| Animations | Framer Motion |
+| Icons | React Icons |
+| Deployment | Vercel |
+| Version Control | Git & GitHub |
+
+---
+
+## 📁 Project Structure
+```
+portfolio/
+├── app/
+│   ├── layout.tsx          # Root layout with metadata
+│   ├── page.tsx            # Main page entry
+│   └── globals.css         # Global styles
+├── components/
+│   ├── Navbar.tsx          # Responsive navigation
+│   ├── Hero.tsx            # Hero section with stats
+│   ├── About.tsx           # About me section
+│   ├── Skills.tsx          # Interactive skills filter
+│   ├── Experience.tsx      # Timeline experience section
+│   └── Contact.tsx         # Contact form
+├── public/
+│   ├── profile.jpeg        # Profile photo
+│   ├── logo.png            # Site logo
+│   └── *.png               # Skill icons
+└── README.md
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🚀 Getting Started
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Prerequisites
+- Node.js 18+
+- npm or yarn
 
-## Learn More
+### Installation & Running Locally
+```bash
+# Clone the repository
+git clone https://github.com/Coader-Sasmi/my-portfolio-website.git
 
-To learn more about Next.js, take a look at the following resources:
+# Navigate into the project
+cd my-portfolio-website
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# Install dependencies
+npm install
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+# Run development server
+npm run dev
+```
 
-## Deploy on Vercel
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Build for Production
+```bash
+npm run build
+npm run start
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## 📊 Performance
+
+| Metric | Score |
+|--------|-------|
+| ⚡ Performance | 90+ |
+| ♿ Accessibility | 95+ |
+| 🔍 SEO | 100 |
+| ✅ Best Practices | 95+ |
+
+> Scores measured using Google Lighthouse
+
+---
+
+## 🌐 Live Demo
+
+👉 **[https://my-portfolio-website-blond-two.vercel.app/](https://my-portfolio-website-blond-two.vercel.app/)**
+
+---
+
+## 📬 Contact
+
+If you'd like to collaborate or hire me for a frontend role:
+
+- 📧 **Email:** mahantasasmita326@gmail.com
+- 💼 **LinkedIn:** [sasmita-mahanta](https://www.linkedin.com/in/sasmita-mahanta-7b24801a7/)
+- 🌐 **Portfolio:** [Visit Here](https://my-portfolio-website-blond-two.vercel.app/)
+
+---
+
+<div align="center">
+
+Made with ❤️ by **Sasmita Mahanta** · © 2026
+
+⭐ **If you found this helpful, please star this repo!**
+
+</div>
