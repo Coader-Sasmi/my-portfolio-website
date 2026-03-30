@@ -1,6 +1,7 @@
 "use client";
 
 import { GitHub, LinkedIn, LocationOn, MailOutline, Send } from "@mui/icons-material";
+import emailjs from "emailjs-com";
 import { useFormik } from "formik";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
@@ -10,6 +11,12 @@ import * as yup from "yup";
 
 function ContactForm() {
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState("");
+
+  // Initialize EmailJS on component mount
+  useEffect(() => {
+    emailjs.init(process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || "");
+  }, []);
 
   const formik = useFormik({
     initialValues: { name: "", email: "", message: "" },
@@ -19,10 +26,28 @@ function ContactForm() {
       message: yup.string().required("Message is required.").min(15, "Min 15 characters").max(500, "Max 500 characters"),
     }),
     onSubmit: async (values) => {
-      console.log({ values });
-      formik.resetForm();
-      setSubmitted(true);
-      setTimeout(() => setSubmitted(false), 4000);
+      try {
+        setError("");
+        
+        // Send email using EmailJS
+        await emailjs.send(
+          process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || "",
+          process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || "",
+          {
+            from_name: values.name,
+            from_email: values.email,
+            message: values.message,
+            to_email: process.env.NEXT_PUBLIC_YOUR_EMAIL || "",
+          }
+        );
+
+        formik.resetForm();
+        setSubmitted(true);
+        setTimeout(() => setSubmitted(false), 4000);
+      } catch (err) {
+        setError("Failed to send message. Please try again.");
+        console.error("Email error:", err);
+      }
     },
   });
 
@@ -104,6 +129,11 @@ function ContactForm() {
         {submitted && (
           <span className="success-msg">
             ✓ Message sent!
+          </span>
+        )}
+        {error && (
+          <span style={{ color: "#ef4444", fontSize: 14 }}>
+            {error}
           </span>
         )}
       </div>
