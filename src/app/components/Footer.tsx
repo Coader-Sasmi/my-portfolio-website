@@ -8,6 +8,7 @@ const navLinks = [
   { label: "About", href: "#about" },
   { label: "Skills", href: "#skill" },
   { label: "Experience", href: "#experience" },
+  { label: "Projects", href: "#projects" },
   { label: "Contact", href: "#contact" },
 ];
 
@@ -165,7 +166,7 @@ export default function Footer() {
                 Sasmita Mahanta
               </h3>
               <p style={{ fontFamily: "'DM Sans', sans-serif", color: "#334155", fontSize: 13, lineHeight: 1.7, margin: 0, fontWeight: 300 }}>
-                Frontend Engineer specialising in React.js, Next.js & TypeScript. Building performant, scalable web applications.
+                Frontend Engineer specialising in React.js, Next.js, TypeScript & WordPress. Building performant, scalable web applications and CMS-based websites.
               </p>
               {/* Socials */}
               <div className="flex gap-3 mt-1">

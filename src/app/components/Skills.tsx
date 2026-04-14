@@ -30,6 +30,11 @@ const categories = [
     icon: "🛠️",
     keys: ["Git", "Webpack", "Vite", "npm", "Yarn", "Jest", "Babel"],
   },
+  {
+    label: "CMS",
+    icon: "🌐",
+    keys: ["WordPress"],
+  },
 ];
 
 // Normalize logo path: ensures it starts with "/" for next/image compatibility
@@ -58,11 +63,11 @@ export default function MySkills() {
   const filteredSkills = activeCategory === "All"
     ? skillsArr
     : skillsArr.filter((item) => {
-        const cat = categories.find((c) => c.label === activeCategory);
-        return cat?.keys.some(
-          (k) => item.title.toLowerCase().includes(k.toLowerCase())
-        );
-      });
+      const cat = categories.find((c) => c.label === activeCategory);
+      return cat?.keys.some(
+        (k) => item.title.toLowerCase().includes(k.toLowerCase())
+      );
+    });
 
   return (
     <>
@@ -259,7 +264,7 @@ export default function MySkills() {
             </h2>
             <div style={{ width: 40, height: 2, background: "linear-gradient(90deg, transparent, #63d8a5, transparent)", borderRadius: 2 }} />
             <p style={{ fontFamily: "'DM Sans', sans-serif", color: "#475569", fontSize: 14, textAlign: "center", maxWidth: 480, lineHeight: 1.7, margin: 0 }}>
-              3.8+ years of hands-on experience with modern frontend technologies — specialising in React.js, Next.js, TypeScript, and performance-optimised UI systems
+              3.8+ years of hands-on experience with modern frontend technologies — specialising in React.js, Next.js, TypeScript, WordPress, and performance-optimised UI systems
             </p>
 
             {/* Expertise summary row */}
@@ -268,6 +273,7 @@ export default function MySkills() {
                 { label: "Frontend", value: "React · Next.js · TypeScript" },
                 { label: "State", value: "Redux Toolkit · SWR" },
                 { label: "Perf.", value: "Code Splitting · Lazy Load" },
+                { label: "CMS", value: "WordPress · 15+ Sites" },
                 { label: "Tools", value: "Git · Vite · Jest" },
               ].map((e) => (
                 <div key={e.label} className="expertise-badge">

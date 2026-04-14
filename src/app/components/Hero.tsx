@@ -315,7 +315,7 @@ export default function Hero() {
 
           {/* Tech chips */}
           <div className="anim-3 flex flex-wrap gap-2 justify-center">
-            {["React.js", "Next.js", "TypeScript", "Redux Toolkit", "REST APIs"].map((t) => (
+            {["React.js", "Next.js", "TypeScript", "Redux Toolkit", "REST APIs", "WordPress"].map((t) => (
               <span
                 key={t}
                 style={{
@@ -348,13 +348,17 @@ export default function Hero() {
                 letterSpacing: "0.01em",
               }}
             >
-              3.8+ years building scalable web applications and dashboard platforms.
-              Led development of an event platform serving{" "}
-              <span style={{ color: "#94a3b8", fontWeight: 400 }}>3,000+ users</span>,
-              improving UI performance by{" "}
-              <span style={{ color: "#94a3b8", fontWeight: 400 }}>30%</span> and reducing
-              load time by{" "}
+              3.8+ years building scalable dashboards, web applications, and
+              CMS-based websites. Architected an Event Management Platform
+              serving{" "}
+              <span style={{ color: "#94a3b8", fontWeight: 400 }}>3,000+ users</span>
+              {" "}— improving UI performance by{" "}
+              <span style={{ color: "#94a3b8", fontWeight: 400 }}>30%</span> and
+              reducing load time by{" "}
               <span style={{ color: "#94a3b8", fontWeight: 400 }}>20%</span>.
+              Also delivered{" "}
+              <span style={{ color: "#94a3b8", fontWeight: 400 }}>15+ production
+                WordPress websites</span> and multiple Next.js applications.
             </p>
           </div>
 

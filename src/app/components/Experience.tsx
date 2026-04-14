@@ -20,12 +20,14 @@ const experiencesData: ExperienceItem[] = [
     date: "Feb 2025 – Present",
     type: "Full-time",
     description:
-      "Architected a scalable Event Management Platform serving 3,000+ users and 15+ administrators with multi-tenant RBAC, boosting rendering efficiency by 30% and reducing load time by 20%.",
+      "Architected an Event Management Platform (React.js + Vite) serving 3,000+ users with multi - tenant RBAC — improving rendering by 30% and load time by 20%.Built a Next.js E- Commerce Admin Panel and developed 15 + production WordPress websites for clients.",
     bullets: [
-      "Designed multi-tenant role-based dashboard supporting 15+ admins and 5+ event workflows",
-      "Implemented code-splitting, lazy loading & API caching (SWR) — 20% faster load times",
-      "Built real-time calendar module with concurrent scheduling conflict handling",
-      "Integrated RESTful APIs for event management, authentication & scheduling workflows",
+      "Architected Event Management Platform (3,000+ users, 15+ admins) using React.js + Vite + Redux Toolkit + SWR",
+      "Designed multi-tenant RBAC dashboard with modular feature isolation",
+      "Improved rendering by 30% and load time by 20% via code-splitting, lazy loading & SWR caching",
+      "Built real-time calendar with concurrent scheduling conflict handling",
+      "Built E-Commerce Admin Panel using Next.js with product management, order tracking and RBAC workflows",
+      "Developed and deployed 15+ production WordPress websites including custom theme development and plugin integration"
     ],
   },
   {
@@ -35,11 +37,12 @@ const experiencesData: ExperienceItem[] = [
     date: "Apr 2024 – Feb 2025",
     type: "Freelance",
     description:
-      "Developed a modular School Management System with role-based access for admins, teachers, and students. Independently managed client communication, feature delivery, and production deployment.",
+      "Delivered production projects for real clients — a multi-category E- Commerce platform for a US - based client and an interior design agency website.Managed end - to - end delivery from client requirements to Vercel deployment.",
     bullets: [
-      "Built reusable component architecture for improved maintainability",
-      "Implemented search, filtering & pagination for large dataset handling",
-      "Managed end-to-end client requirements and independent feature delivery",
+      "Delivered Limited Cart — multi-category E-Commerce platform for US-based client with cart management and gender-based filtering",
+      "Built Elite Work — production website for Bangalore-based interior design agency serving real clients",
+      "Implemented search, filtering & pagination for 10,000+ records",
+      "Managed end-to-end delivery from requirement gathering to deployment",
     ],
   },
   {

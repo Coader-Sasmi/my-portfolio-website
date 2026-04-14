@@ -9,6 +9,7 @@ import {
   Navbar,
   Skills
 } from "./components";
+import Projects from "./components/Projects";
 
 export default function Home() {
   return (
@@ -18,6 +19,7 @@ export default function Home() {
       <AboutMe />
       <Skills />
       <Experience />
+      <Projects />
       <Contact />
       <Footer />
     </>

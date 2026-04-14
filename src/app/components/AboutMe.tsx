@@ -2,19 +2,30 @@
 
 import { useEffect, useRef, useState } from "react";
 
+// ── UPDATED skills array — WordPress added ─────────────────────────────────
 const skills = [
   { name: "React.js", level: 95 },
   { name: "TypeScript", level: 92 },
-  { name: "Next.js", level: 90 },
+  { name: "Next.js", level: 94 },
   { name: "JavaScript (ES6+)", level: 95 },
   { name: "Redux Toolkit", level: 88 },
-  { name: "Tailwind CSS / MUI", level: 90 },
+  { name: "Tailwind CSS / MUI", level: 92 },
   { name: "REST APIs & SWR", level: 87 },
+  { name: "WordPress", level: 90 },
   { name: "Node.js / Express", level: 65 },
-  { name: "MongoDB", level: 62 },
 ];
 
-const tags = ["Performance Optimization", "Component Architecture", "RBAC Systems", "Code Splitting", "Agile / Sprints"];
+// ── UPDATED tags — WordPress already there, added Vite ────────────────────
+const tags = [
+  "Performance Optimization",
+  "Component Architecture",
+  "RBAC Systems",
+  "Code Splitting",
+  "WordPress CMS",
+  "Agile / Sprints",
+  "Cross-browser Compatibility",
+  "Responsive Web Design",
+];
 
 function SkillBar({ name, level, delay }: { name: string; level: number; delay: number }) {
   const [animated, setAnimated] = useState(false);
@@ -32,8 +43,12 @@ function SkillBar({ name, level, delay }: { name: string; level: number; delay: 
   return (
     <div ref={ref} style={{ animationDelay: `${delay}ms` }} className="skill-row">
       <div className="flex justify-between mb-1">
-        <span style={{ color: "#cbd5e1", fontSize: 13, fontWeight: 500, fontFamily: "'DM Sans', sans-serif" }}>{name}</span>
-        <span style={{ color: "#63d8a5", fontSize: 12, fontWeight: 600, fontFamily: "'Syne', sans-serif" }}>{level}%</span>
+        <span style={{ color: "#cbd5e1", fontSize: 13, fontWeight: 500, fontFamily: "'DM Sans', sans-serif" }}>
+          {name}
+        </span>
+        <span style={{ color: "#63d8a5", fontSize: 12, fontWeight: 600, fontFamily: "'Syne', sans-serif" }}>
+          {level}%
+        </span>
       </div>
       <div style={{ background: "rgba(255,255,255,0.06)", borderRadius: 100, height: 4, overflow: "hidden" }}>
         <div
@@ -221,37 +236,56 @@ export default function AboutMe() {
             {/* Left — story */}
             <div className="flex flex-col gap-6 fade-left">
               <div className="glass-card p-7 flex flex-col gap-5">
+
+                {/* ── UPDATED paragraph 1 ── */}
                 <div className="flex items-start gap-4">
                   <div className="accent-line" style={{ height: 48 }} />
                   <p style={{ fontFamily: "'DM Sans', sans-serif", color: "#94a3b8", fontSize: 15, lineHeight: 1.85, fontWeight: 300, margin: 0 }}>
-                    After earning my Master of Computer Application from Sambalpur University, I specialised in frontend engineering — building scalable web applications and dashboard platforms with React.js, Next.js, and TypeScript for 3.8+ years.
+                    After earning my Master of Computer Application from Sambalpur
+                    University, I specialised in frontend engineering — building scalable
+                    dashboards, web applications, and CMS-based websites using React.js,
+                    Next.js, TypeScript, and WordPress for 3.8+ years.
                   </p>
                 </div>
+
+                {/* ── UPDATED paragraph 2 ── */}
                 <div className="flex items-start gap-4">
                   <div className="accent-line" style={{ height: 48 }} />
                   <p style={{ fontFamily: "'DM Sans', sans-serif", color: "#64748b", fontSize: 15, lineHeight: 1.85, fontWeight: 300, margin: 0 }}>
-                    My expertise spans REST API integration, Redux Toolkit state management, performance optimisation (code-splitting, lazy loading, SWR caching), and component-driven architecture. I led an event platform serving 3,000+ users, cutting load time by 20% and improving rendering efficiency by 30%.
+                    My expertise spans REST API integration, Redux Toolkit state
+                    management, performance optimisation (code-splitting, lazy loading,
+                    SWR caching), component-driven architecture, and WordPress CMS
+                    development. I architected an Event Management Platform serving
+                    3,000+ users — improving rendering by 30% and reducing load time
+                    by 20%. I also developed and deployed 15+ production WordPress
+                    websites alongside multiple Next.js applications at Netsqure.
                   </p>
                 </div>
+
               </div>
 
-              {/* Floating tags */}
+              {/* Floating tags — UPDATED */}
               <div className="flex flex-wrap gap-2">
                 {tags.map((t) => (
                   <span key={t} className="skill-tag">{t}</span>
                 ))}
               </div>
 
-              {/* Mini stat cards */}
-              <div className="grid grid-cols-3 gap-3">
+              {/* Mini stat cards — UPDATED — added WordPress count */}
+              <div className="grid grid-cols-4 gap-3">
                 {[
                   { val: "MCA", label: "Sambalpur Univ." },
                   { val: "3.8+", label: "Years of exp." },
                   { val: "3k+", label: "Users served" },
+                  { val: "15+", label: "WordPress sites" },
                 ].map((s) => (
                   <div key={s.label} className="glass-card p-4 text-center">
-                    <p style={{ fontFamily: "'Syne', sans-serif", color: "#63d8a5", fontSize: 18, fontWeight: 800, margin: 0 }}>{s.val}</p>
-                    <p style={{ fontFamily: "'DM Sans', sans-serif", color: "#475569", fontSize: 11, letterSpacing: "0.06em", textTransform: "uppercase", margin: "3px 0 0" }}>{s.label}</p>
+                    <p style={{ fontFamily: "'Syne', sans-serif", color: "#63d8a5", fontSize: 18, fontWeight: 800, margin: 0 }}>
+                      {s.val}
+                    </p>
+                    <p style={{ fontFamily: "'DM Sans', sans-serif", color: "#475569", fontSize: 11, letterSpacing: "0.06em", textTransform: "uppercase", margin: "3px 0 0" }}>
+                      {s.label}
+                    </p>
                   </div>
                 ))}
               </div>
@@ -286,7 +320,9 @@ export default function AboutMe() {
                   🚀
                 </div>
                 <div>
-                  <p style={{ fontFamily: "'Syne', sans-serif", color: "#e2e8f0", fontSize: 13, fontWeight: 700, margin: "0 0 4px", letterSpacing: "0.04em" }}>Currently Expanding Into</p>
+                  <p style={{ fontFamily: "'Syne', sans-serif", color: "#e2e8f0", fontSize: 13, fontWeight: 700, margin: "0 0 4px", letterSpacing: "0.04em" }}>
+                    Currently Expanding Into
+                  </p>
                   <p style={{ fontFamily: "'DM Sans', sans-serif", color: "#475569", fontSize: 13, lineHeight: 1.6, margin: 0 }}>
                     MongoDB · Express · Node.js · Full-stack MERN architecture
                   </p>
