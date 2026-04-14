@@ -37,9 +37,9 @@ const experiencesData: ExperienceItem[] = [
     date: "Apr 2024 – Feb 2025",
     type: "Freelance",
     description:
-      "Delivered production projects for real clients — a multi-category E- Commerce platform for a US - based client and an interior design agency website.Managed end - to - end delivery from client requirements to Vercel deployment.",
+      "Delivered production projects for real clients — a multi-category E-Commerce platform and an interior design agency website. Managed end-to-end delivery from client requirements to Vercel deployment.",
     bullets: [
-      "Delivered Limited Cart — multi-category E-Commerce platform for US-based client with cart management and gender-based filtering",
+      "Delivered Limited Cart — multi-category E-Commerce platform with cart management, gender-based filtering, and responsive UI",
       "Built Elite Work — production website for Bangalore-based interior design agency serving real clients",
       "Implemented search, filtering & pagination for 10,000+ records",
       "Managed end-to-end delivery from requirement gathering to deployment",

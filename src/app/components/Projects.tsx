@@ -40,7 +40,7 @@ const projects = [
         title: "Limited Cart",
         description:
             "Multi-category E-Commerce platform with gender-based sub-filtering, cart state management, and fully responsive UI across 6 product categories including Furniture, Footwear, Bags and more.",
-        metrics: ["US Client", "6 Categories", "Cart System"],
+        metrics: ["Client Project", "6 Categories", "Cart System"],
         tech: ["Next.js", "TypeScript", "Tailwind CSS", "REST API"],
         live: "https://limited-cart.vercel.app/",
         github: "https://github.com/Coader-Sasmi/limited_cart",
