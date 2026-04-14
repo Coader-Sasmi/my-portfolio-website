@@ -66,7 +66,7 @@ const projects = [
 ];
 
 export default function Projects() {
-    const [hovered, setHovered] = useState<number | null>(null);
+    const [, setHovered] = useState<number | null>(null);
 
     return (
         <>
