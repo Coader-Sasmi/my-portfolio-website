@@ -8,27 +8,50 @@ import {
 } from "@mui/icons-material";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
+
+interface StatItem {
+  value: string;
+  label: string;
+}
+
+const TECH_STACK: readonly string[] = [
+  "Next.js",
+  "TypeScript",
+  "React.js",
+  "Redux Toolkit",
+  "SWR",
+  "Tailwind CSS",
+  "GSAP"
+];
+
+const STATS: readonly StatItem[] = [
+  { value: "4+", label: "Years exp." },
+  { value: "3,000+", label: "Users served" },
+  { value: "30%", label: "Perf. boost" },
+];
 
 export default function Hero() {
   const orb1 = useRef<HTMLDivElement>(null);
   const orb2 = useRef<HTMLDivElement>(null);
 
+  const handleMove = useCallback((e: MouseEvent): void => {
+    const { clientX, clientY } = e;
+    const cx = window.innerWidth / 2;
+    const cy = window.innerHeight / 2;
+
+    if (orb1.current) {
+      orb1.current.style.transform = `translate(${(clientX - cx) * 0.03}px, ${(clientY - cy) * 0.03}px)`;
+    }
+    if (orb2.current) {
+      orb2.current.style.transform = `translate(${(clientX - cx) * -0.02}px, ${(clientY - cy) * -0.02}px)`;
+    }
+  }, []);
+
   useEffect(() => {
-    const handleMove = (e: MouseEvent) => {
-      const { clientX, clientY } = e;
-      const cx = window.innerWidth / 2;
-      const cy = window.innerHeight / 2;
-      if (orb1.current) {
-        orb1.current.style.transform = `translate(${(clientX - cx) * 0.03}px, ${(clientY - cy) * 0.03}px)`;
-      }
-      if (orb2.current) {
-        orb2.current.style.transform = `translate(${(clientX - cx) * -0.02}px, ${(clientY - cy) * -0.02}px)`;
-      }
-    };
     window.addEventListener("mousemove", handleMove);
     return () => window.removeEventListener("mousemove", handleMove);
-  }, []);
+  }, [handleMove]);
 
   return (
     <>
@@ -70,21 +93,11 @@ export default function Hero() {
         .anim-5 { animation: fadeUp 0.7s cubic-bezier(.22,.68,0,1.2) 0.7s both; }
         .avatar-anim { animation: scaleIn 0.8s cubic-bezier(.22,.68,0,1.2) both; }
 
-        .avatar-ring {
-          animation: ring-pulse 2.6s ease-in-out infinite;
-        }
-        .orb-shape {
-          animation: orb-drift 8s ease-in-out infinite;
-          transition: transform 0.6s ease;
-        }
+        .avatar-ring { animation: ring-pulse 2.6s ease-in-out infinite; }
+        .orb-shape { animation: orb-drift 8s ease-in-out infinite; transition: transform 0.6s ease; }
+
         .name-shimmer {
-          background: linear-gradient(
-            100deg,
-            #63d8a5 0%,
-            #a8f0d0 40%,
-            #63d8a5 60%,
-            #3cb87a 100%
-          );
+          background: linear-gradient(100deg, #63d8a5 0%, #a8f0d0 40%, #63d8a5 60%, #3cb87a 100%);
           background-size: 200% auto;
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
@@ -98,9 +111,7 @@ export default function Hero() {
           background: #63d8a5;
           color: #0a0f1a;
           border-radius: 100px;
-          padding: 12px 26px;
           font-weight: 600;
-          font-size: 15px;
           display: flex;
           align-items: center;
           gap: 8px;
@@ -116,10 +127,7 @@ export default function Hero() {
           transition: transform 0.35s ease;
         }
         .btn-primary:hover::before { transform: translateX(0); }
-        .btn-primary:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 8px 24px rgba(99,216,165,0.35);
-        }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(99,216,165,0.35); }
         .btn-primary:active { transform: translateY(0); }
 
         .btn-outline {
@@ -129,45 +137,32 @@ export default function Hero() {
           color: #e2e8f0;
           border: 1px solid rgba(226,232,240,0.25);
           border-radius: 100px;
-          padding: 12px 26px;
           font-weight: 500;
-          font-size: 15px;
           display: flex;
           align-items: center;
           gap: 8px;
           transition: transform 0.2s, border-color 0.2s, background 0.2s;
           backdrop-filter: blur(6px);
         }
-        .btn-outline:hover {
-          border-color: rgba(99,216,165,0.5);
-          background: rgba(99,216,165,0.07);
-          transform: translateY(-2px);
-        }
+        .btn-outline:hover { border-color: rgba(99,216,165,0.5); background: rgba(99,216,165,0.07); transform: translateY(-2px); }
 
         .btn-icon {
           background: transparent;
           color: #94a3b8;
           border: 1px solid rgba(148,163,184,0.2);
           border-radius: 100px;
-          padding: 10px;
           display: flex;
           align-items: center;
           justify-content: center;
           transition: transform 0.2s, border-color 0.2s, color 0.2s, background 0.2s;
           backdrop-filter: blur(6px);
         }
-        .btn-icon:hover {
-          border-color: rgba(99,216,165,0.5);
-          color: #63d8a5;
-          background: rgba(99,216,165,0.08);
-          transform: translateY(-2px) scale(1.08);
-        }
+        .btn-icon:hover { border-color: rgba(99,216,165,0.5); color: #63d8a5; background: rgba(99,216,165,0.08); transform: translateY(-2px) scale(1.08); }
 
         .badge {
           display: inline-flex;
           align-items: center;
           gap: 6px;
-          font-size: 12px;
           font-weight: 500;
           letter-spacing: 0.08em;
           text-transform: uppercase;
@@ -175,224 +170,131 @@ export default function Hero() {
           background: rgba(99,216,165,0.1);
           border: 1px solid rgba(99,216,165,0.2);
           border-radius: 100px;
-          padding: 5px 14px;
         }
-        .badge-dot {
-          width: 6px; height: 6px;
-          border-radius: 50%;
-          background: #63d8a5;
-          animation: ring-pulse 2s ease-in-out infinite;
-        }
+        .badge-dot { width: 6px; height: 6px; border-radius: 50%; background: #63d8a5; animation: ring-pulse 2s ease-in-out infinite; }
 
         .stat-card {
           background: rgba(255,255,255,0.04);
           border: 1px solid rgba(255,255,255,0.08);
           border-radius: 16px;
-          padding: 16px 22px;
           backdrop-filter: blur(10px);
           transition: transform 0.2s, border-color 0.2s;
         }
-        .stat-card:hover {
-          transform: translateY(-3px);
-          border-color: rgba(99,216,165,0.25);
-        }
+        .stat-card:hover { transform: translateY(-3px); border-color: rgba(99,216,165,0.25); }
 
-        .deco-line {
-          width: 48px; height: 2px;
-          background: linear-gradient(90deg, #63d8a5, transparent);
-          border-radius: 2px;
-        }
-        .spin-ring {
-          position: absolute; inset: -10px;
-          border: 1px dashed rgba(99,216,165,0.2);
-          border-radius: 50%;
-          animation: spin-slow 18s linear infinite;
-          pointer-events: none;
-        }
+        .deco-line { width: 48px; height: 2px; background: linear-gradient(90deg, #63d8a5, transparent); border-radius: 2px; }
+        .spin-ring { position: absolute; inset: -10px; border: 1px dashed rgba(99,216,165,0.2); border-radius: 50%; animation: spin-slow 18s linear infinite; pointer-events: none; }
       `}</style>
 
-      <section
-        className="hero-section relative flex flex-col items-center justify-center min-h-screen py-20 px-4 overflow-hidden"
-        style={{ background: "linear-gradient(135deg, #070c18 0%, #0d1526 60%, #081020 100%)" }}
-      >
+      <section className="hero-section relative flex flex-col items-center justify-center min-h-screen py-16 sm:py-20 px-4 overflow-hidden bg-[linear-gradient(135deg,#070c18_0%,#0d1526_60%,#081020_100%)]">
         {/* Background orbs */}
         <div
           ref={orb1}
-          className="orb-shape absolute pointer-events-none"
-          style={{
-            width: 520, height: 520,
-            top: "-120px", right: "-80px",
-            background: "radial-gradient(circle, rgba(99,216,165,0.07) 0%, transparent 70%)",
-            filter: "blur(40px)",
-          }}
+          className="orb-shape absolute pointer-events-none w-[320px] h-[320px] sm:w-[420px] sm:h-[420px] lg:w-[520px] lg:h-[520px] -top-20 sm:-top-24 lg:-top-[120px] -right-16 sm:-right-20 blur-[40px] bg-[radial-gradient(circle,rgba(99,216,165,0.07)_0%,transparent_70%)]"
         />
         <div
           ref={orb2}
-          className="orb-shape absolute pointer-events-none"
-          style={{
-            width: 400, height: 400,
-            bottom: "-80px", left: "-60px",
-            background: "radial-gradient(circle, rgba(56,130,255,0.06) 0%, transparent 70%)",
-            filter: "blur(50px)",
-          }}
+          className="orb-shape absolute pointer-events-none w-[260px] h-[260px] sm:w-[320px] sm:h-[320px] lg:w-[400px] lg:h-[400px] -bottom-16 sm:-bottom-20 -left-12 sm:-left-16 blur-[50px] bg-[radial-gradient(circle,rgba(56,130,255,0.06)_0%,transparent_70%)]"
         />
 
         {/* Grid texture */}
-        <div
-          className="absolute inset-0 pointer-events-none opacity-[0.025]"
-          style={{
-            backgroundImage: `linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px),
-                              linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)`,
-            backgroundSize: "60px 60px",
-          }}
-        />
+        <div className="absolute inset-0 pointer-events-none opacity-[0.025] bg-[length:60px_60px] bg-[linear-gradient(rgba(255,255,255,0.5)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.5)_1px,transparent_1px)]" />
 
-        <div className="relative z-10 flex flex-col items-center max-w-3xl w-full text-center gap-7">
+        <div className="relative z-10 flex flex-col items-center max-w-3xl w-full text-center gap-5 sm:gap-6 lg:gap-7">
           {/* Badge */}
           <div className="anim-1">
-            <span className="badge">
+            <span className="badge text-[11px] sm:text-xs px-3.5 sm:px-[14px] py-[5px]">
               <span className="badge-dot" />
-              Available for work
+              Remote (UTC +5:30 / IST Friendly)
             </span>
           </div>
 
           {/* Avatar */}
-          {/* Avatar */}
-          <div className="avatar-anim relative" style={{ width: 120, height: 120 }}>
+          <div className="avatar-anim relative w-[100px] h-[100px] sm:w-[112px] sm:h-[112px] lg:w-[120px] lg:h-[120px]">
             <div className="spin-ring" />
-            <div
-              className="avatar-ring"
-              style={{
-                width: 112,
-                height: 112,
-                borderRadius: "50%",
-                overflow: "hidden",
-                border: "2.5px solid rgba(99,216,165,0.5)",
-                margin: "4px auto",
-                position: "relative",
-              }}
-            >
-              <Image
-                src="/profile.jpeg"
-                alt="Sasmita Mahanta"
-                fill
-                style={{ objectFit: "cover" }}
-              />
+            <div className="avatar-ring relative mx-auto mt-1 w-[92px] h-[92px] sm:w-[104px] sm:h-[104px] lg:w-[112px] lg:h-[112px] rounded-full overflow-hidden border-[2.5px] border-[rgba(99,216,165,0.5)]">
+              <Image src="/profile.jpeg" alt="Sasmita Mahanta" fill className="object-cover" />
             </div>
           </div>
 
           {/* Greeting */}
           <div className="anim-2 flex items-center gap-3">
             <div className="deco-line" />
-            <p style={{ color: "#94a3b8", fontSize: 15, fontWeight: 400, letterSpacing: "0.06em" }}>
-              Hi, my name is
-            </p>
-            <div className="deco-line" style={{ transform: "scaleX(-1)" }} />
+            <p className="text-slate-400 text-sm font-normal tracking-[0.06em]">Hi, my name is</p>
+            <div className="deco-line scale-x-[-1]" />
           </div>
 
           {/* Name */}
-          <div className="anim-3 display-font" style={{ lineHeight: 1.1 }}>
-            <h1 className="name-shimmer" style={{ fontSize: "clamp(2.4rem, 6vw, 4rem)", fontWeight: 800, margin: 0 }}>
+          <div className="anim-3 display-font leading-[1.1]">
+            <h1 className="name-shimmer text-[clamp(2.4rem,6vw,4rem)] font-extrabold m-0">
               Sasmita Mahanta
             </h1>
           </div>
 
           {/* Headline */}
           <div className="anim-3 display-font">
-            <h2
-              style={{
-                fontSize: "clamp(1.5rem, 4vw, 2.4rem)",
-                fontWeight: 700,
-                color: "#e2e8f0",
-                margin: 0,
-                lineHeight: 1.25,
-              }}
-            >
-              Product-focused{" "}
-              <span style={{ color: "#475569" }}>Frontend Engineer</span>
+            <h2 className="text-[clamp(1.5rem,4vw,2.4rem)] font-bold text-slate-200 m-0 leading-[1.25]">
+              Frontend Engineer
             </h2>
           </div>
 
           {/* Tech chips */}
-          <div className="anim-3 flex flex-wrap gap-2 justify-center">
-            {["React.js", "Next.js", "TypeScript", "Redux Toolkit", "REST APIs", "WordPress"].map((t) => (
+          <div className="anim-3 flex flex-wrap gap-2 justify-center px-2">
+            {TECH_STACK.map((tech) => (
               <span
-                key={t}
-                style={{
-                  fontFamily: "'DM Sans', sans-serif",
-                  fontSize: 12,
-                  fontWeight: 500,
-                  color: "#64748b",
-                  background: "rgba(255,255,255,0.04)",
-                  border: "1px solid rgba(255,255,255,0.08)",
-                  borderRadius: 100,
-                  padding: "4px 12px",
-                  letterSpacing: "0.03em",
-                }}
+                key={tech}
+                className="text-[11px] sm:text-xs font-medium text-slate-500 bg-white/[0.04] border border-white/[0.08] rounded-full px-3 sm:px-[12px] py-1 tracking-[0.03em]"
               >
-                {t}
+                {tech}
               </span>
             ))}
           </div>
 
           {/* Description */}
           <div className="anim-4">
-            <p
-              style={{
-                color: "#64748b",
-                fontSize: 16,
-                lineHeight: 1.75,
-                maxWidth: 540,
-                margin: "0 auto",
-                fontWeight: 300,
-                letterSpacing: "0.01em",
-              }}
-            >
-              3.8+ years building scalable dashboards, web applications, and
-              CMS-based websites. Architected an Event Management Platform
+            <p className="text-slate-500 text-sm sm:text-base leading-[1.75] max-w-[540px] mx-auto font-light tracking-[0.01em] px-2">
+              4+ years of professional experience architecting performance-optimized SaaS applications
+              and enterprise-grade dashboard systems. Architected an Event Management Platform
               serving{" "}
-              <span style={{ color: "#94a3b8", fontWeight: 400 }}>3,000+ users</span>
-              {" "}— improving UI performance by{" "}
-              <span style={{ color: "#94a3b8", fontWeight: 400 }}>30%</span> and
-              reducing load time by{" "}
-              <span style={{ color: "#94a3b8", fontWeight: 400 }}>20%</span>.
-              Also delivered{" "}
-              <span style={{ color: "#94a3b8", fontWeight: 400 }}>15+ production
-                WordPress websites</span> and multiple Next.js applications.
+              <span className="text-slate-400 font-normal">3,000+ active users</span>
+              {" "}— successfully improving UI rendering performance metrics by{" "}
+              <span className="text-slate-400 font-normal">30%</span> and
+              reducing load time thresholds by{" "}
+              <span className="text-slate-400 font-normal">20%</span> through custom SWR caching and modular chunk architectures.
             </p>
           </div>
 
           {/* Stats */}
-          <div className="anim-4 flex gap-4 flex-wrap justify-center">
-            {[
-              { value: "3.8+", label: "Years exp." },
-              { value: "3,000+", label: "Users served" },
-              { value: "30%", label: "Perf. boost" },
-            ].map((s) => (
-              <div key={s.label} className="stat-card">
-                <p className="display-font" style={{ color: "#63d8a5", fontSize: 22, fontWeight: 800, margin: 0 }}>{s.value}</p>
-                <p style={{ color: "#475569", fontSize: 12, fontWeight: 500, letterSpacing: "0.06em", textTransform: "uppercase", margin: "2px 0 0" }}>{s.label}</p>
+          <div className="anim-4 flex gap-3 sm:gap-4 flex-wrap justify-center">
+            {STATS.map((stat) => (
+              <div key={stat.label} className="stat-card px-4 sm:px-[22px] py-3 sm:py-4">
+                <p className="display-font text-emerald-400 text-lg sm:text-[22px] font-extrabold m-0">
+                  {stat.value}
+                </p>
+                <p className="text-slate-600 text-[11px] sm:text-xs font-medium tracking-[0.06em] uppercase mt-0.5 mb-0">
+                  {stat.label}
+                </p>
               </div>
             ))}
           </div>
 
           {/* Buttons */}
           <div className="anim-5 flex flex-wrap gap-3 justify-center items-center">
-            <button className="btn-primary">
+            <button type="button" className="btn-primary text-sm px-5 sm:px-[26px] py-3 sm:py-[12px]">
               Contact me <TrendingFlat fontSize="small" />
             </button>
-            <Link href="/Sasmita_Mahanta_Frontend_Engineer_3.8yrs.pdf" download>
-              <button className="btn-outline">
+            <Link href="/Sasmita_Mahanta_4YOE.pdf" download>
+              <button type="button" className="btn-outline text-sm px-5 sm:px-[26px] py-3 sm:py-[12px]">
                 Download CV <FileDownload fontSize="small" />
               </button>
             </Link>
-            <Link href="https://www.linkedin.com/in/sasmita-mahanta-7b24801a7/" target="_blank">
-              <button className="btn-icon" aria-label="LinkedIn">
+            <Link href="https://www.linkedin.com/in/sasmita-mahanta-7b24801a7/" target="_blank" rel="noopener noreferrer">
+              <button type="button" className="btn-icon p-2.5" aria-label="LinkedIn">
                 <LinkedIn fontSize="small" />
               </button>
             </Link>
-            <Link href="https://github.com/Coader-Sasmi" target="_blank">
-              <button className="btn-icon" aria-label="GitHub">
+            <Link href="https://github.com/Coader-Sasmi" target="_blank" rel="noopener noreferrer">
+              <button type="button" className="btn-icon p-2.5" aria-label="GitHub">
                 <GitHub fontSize="small" />
               </button>
             </Link>

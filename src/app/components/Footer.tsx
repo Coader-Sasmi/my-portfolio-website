@@ -1,10 +1,22 @@
 "use client";
 
 import { GitHub, KeyboardArrowUp, LinkedIn, MailOutline } from "@mui/icons-material";
+import type { SvgIconComponent } from "@mui/icons-material";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
-const navLinks = [
+interface NavLink {
+  label: string;
+  href: string;
+}
+
+interface SocialLink {
+  label: string;
+  href: string;
+  Icon: SvgIconComponent;
+}
+
+const NAV_LINKS: readonly NavLink[] = [
   { label: "About", href: "#about" },
   { label: "Skills", href: "#skill" },
   { label: "Experience", href: "#experience" },
@@ -12,26 +24,33 @@ const navLinks = [
   { label: "Contact", href: "#contact" },
 ];
 
-const socials = [
-  { icon: <LinkedIn style={{ fontSize: 18 }} />, href: "https://www.linkedin.com/in/sasmita-mahanta-7b24801a7/", label: "LinkedIn" },
-  { icon: <GitHub style={{ fontSize: 18 }} />, href: "https://github.com/Coader-Sasmi", label: "GitHub" },
-  { icon: <MailOutline style={{ fontSize: 18 }} />, href: "mailto:mahantasasmita326@gmail.com", label: "Email" },
+const SOCIALS: readonly SocialLink[] = [
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/sasmita-mahanta-7b24801a7/", Icon: LinkedIn },
+  { label: "GitHub", href: "https://github.com/Coader-Sasmi", Icon: GitHub },
+  { label: "Email", href: "mailto:mahantasasmita326@gmail.com", Icon: MailOutline },
 ];
+
+const CURRENT_YEAR = new Date().getFullYear();
 
 export default function Footer() {
   const footerRef = useRef<HTMLElement>(null);
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState<boolean>(false);
 
   useEffect(() => {
     const obs = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setVisible(true); },
+      ([entry]) => {
+        if (entry.isIntersecting) setVisible(true);
+      },
       { threshold: 0.1 }
     );
-    if (footerRef.current) obs.observe(footerRef.current);
+    const node = footerRef.current;
+    if (node) obs.observe(node);
     return () => obs.disconnect();
   }, []);
 
-  const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
+  const scrollToTop = useCallback((): void => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
 
   return (
     <>
@@ -134,45 +153,62 @@ export default function Footer() {
           width: 3px; height: 3px; border-radius: 50%;
           background: #334155; display: inline-block;
         }
+
+        .footer-contact-email {
+          font-family: 'DM Sans', sans-serif;
+          font-size: 13px;
+          color: #63d8a5;
+          text-decoration: none;
+          transition: opacity 0.2s;
+        }
+        .footer-contact-email:hover { opacity: 0.75; }
+
+        .footer-contact-phone {
+          font-family: 'DM Sans', sans-serif;
+          font-size: 13px;
+          color: #475569;
+          text-decoration: none;
+          transition: color 0.2s;
+        }
+        .footer-contact-phone:hover { color: #94a3b8; }
       `}</style>
 
       <footer
         ref={footerRef}
-        className={`relative w-full overflow-hidden ${visible ? "footer-visible" : ""}`}
-        style={{ background: "linear-gradient(180deg, #070c18 0%, #040810 100%)" }}
+        className={`relative w-full overflow-hidden bg-gradient-to-b from-[#070c18] to-[#040810] ${
+          visible ? "footer-visible" : ""
+        }`}
       >
         {/* Top glow */}
-        <div className="absolute pointer-events-none" style={{
-          width: 600, height: 200, top: 0, left: "50%",
-          transform: "translateX(-50%)",
-          background: "radial-gradient(ellipse, rgba(99,216,165,0.04) 0%, transparent 70%)",
-          filter: "blur(40px)",
-        }} />
+        <div className="absolute pointer-events-none w-[420px] h-[160px] sm:w-[520px] sm:h-[180px] lg:w-[600px] lg:h-[200px] top-0 left-1/2 -translate-x-1/2 bg-[radial-gradient(ellipse,rgba(99,216,165,0.04)_0%,transparent_70%)] blur-[40px]" />
 
         {/* Top gradient line */}
         <div className="footer-divider" />
 
-        <div className="relative z-10 max-w-5xl mx-auto px-6 py-12 flex flex-col gap-10">
-
+        <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 py-10 sm:py-12 flex flex-col gap-8 sm:gap-10">
           {/* Main row */}
           <div className="f-anim-1 flex flex-col md:flex-row items-start justify-between gap-8">
-
             {/* Brand */}
             <div className="flex flex-col gap-3 max-w-xs">
-              <h3
-                className="footer-name-shimmer"
-                style={{ fontFamily: "'Syne', sans-serif", fontSize: 22, fontWeight: 800, margin: 0 }}
-              >
+              <h3 className="footer-name-shimmer font-['Syne'] text-[22px] font-extrabold m-0">
                 Sasmita Mahanta
               </h3>
-              <p style={{ fontFamily: "'DM Sans', sans-serif", color: "#334155", fontSize: 13, lineHeight: 1.7, margin: 0, fontWeight: 300 }}>
-                Frontend Engineer specialising in React.js, Next.js, TypeScript & WordPress. Building performant, scalable web applications and CMS-based websites.
+              <p className="font-['DM_Sans'] text-slate-700 text-[13px] leading-[1.7] m-0 font-light">
+                Frontend Engineer specialising in React.js, Next.js, TypeScript & WordPress.
+                Building performant, scalable web applications and CMS-based websites.
               </p>
               {/* Socials */}
               <div className="flex gap-3 mt-1">
-                {socials.map((s) => (
-                  <Link key={s.label} href={s.href} target="_blank" className="footer-social-btn" aria-label={s.label}>
-                    {s.icon}
+                {SOCIALS.map(({ label, href, Icon }) => (
+                  <Link
+                    key={label}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="footer-social-btn"
+                    aria-label={label}
+                  >
+                    <Icon className="text-lg" />
                   </Link>
                 ))}
               </div>
@@ -180,32 +216,28 @@ export default function Footer() {
 
             {/* Nav links */}
             <div className="flex flex-col gap-3">
-              <p style={{ fontFamily: "'Syne', sans-serif", color: "#e2e8f0", fontSize: 12, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", margin: 0 }}>
+              <p className="font-['Syne'] text-slate-200 text-xs font-bold tracking-[0.1em] uppercase m-0">
                 Navigation
               </p>
-              {navLinks.map((l) => (
-                <Link key={l.label} href={l.href} className="footer-nav-link">{l.label}</Link>
+              {NAV_LINKS.map((link) => (
+                <Link key={link.label} href={link.href} className="footer-nav-link">
+                  {link.label}
+                </Link>
               ))}
             </div>
 
             {/* Contact snapshot */}
             <div className="flex flex-col gap-3">
-              <p style={{ fontFamily: "'Syne', sans-serif", color: "#e2e8f0", fontSize: 12, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", margin: 0 }}>
+              <p className="font-['Syne'] text-slate-200 text-xs font-bold tracking-[0.1em] uppercase m-0">
                 Contact
               </p>
-              <Link href="mailto:mahantasasmita326@gmail.com" style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: "#63d8a5", textDecoration: "none", transition: "opacity 0.2s" }}
-                onMouseEnter={e => (e.currentTarget.style.opacity = "0.75")}
-                onMouseLeave={e => (e.currentTarget.style.opacity = "1")}
-              >
+              <Link href="mailto:mahantasasmita326@gmail.com" className="footer-contact-email">
                 mahantasasmita326@gmail.com
               </Link>
-              <Link href="tel:+917008289045" style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: "#475569", textDecoration: "none", transition: "color 0.2s" }}
-                onMouseEnter={e => (e.currentTarget.style.color = "#94a3b8")}
-                onMouseLeave={e => (e.currentTarget.style.color = "#475569")}
-              >
+              <Link href="tel:+917008289045" className="footer-contact-phone">
                 +91-70082-89045
               </Link>
-              <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: "#334155", margin: 0 }}>
+              <p className="font-['DM_Sans'] text-[13px] text-slate-700 m-0">
                 Odisha, India · Remote
               </p>
             </div>
@@ -217,31 +249,25 @@ export default function Footer() {
           {/* Bottom bar */}
           <div className="f-anim-3 flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-2 flex-wrap justify-center sm:justify-start">
-              <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: "#334155", fontWeight: 300 }}>
+              <span className="font-['DM_Sans'] text-[13px] text-slate-700 font-light">
                 Made with
               </span>
               <span className="heart">❤️</span>
-              <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: "#334155", fontWeight: 300 }}>
-                by
-              </span>
-              <span
-                className="footer-name-shimmer"
-                style={{ fontFamily: "'Syne', sans-serif", fontSize: 13, fontWeight: 700 }}
-              >
+              <span className="font-['DM_Sans'] text-[13px] text-slate-700 font-light">by</span>
+              <span className="footer-name-shimmer font-['Syne'] text-[13px] font-bold">
                 Sasmita
               </span>
               <span className="footer-dot" />
-              <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: "#334155", fontWeight: 300 }}>
-                © {new Date().getFullYear()} All rights reserved.
+              <span className="font-['DM_Sans'] text-[13px] text-slate-700 font-light">
+                © {CURRENT_YEAR} All rights reserved.
               </span>
             </div>
 
             {/* Back to top */}
-            <button className="back-to-top" onClick={scrollToTop} aria-label="Back to top">
-              <KeyboardArrowUp style={{ fontSize: 20 }} />
+            <button type="button" className="back-to-top" onClick={scrollToTop} aria-label="Back to top">
+              <KeyboardArrowUp className="text-xl" />
             </button>
           </div>
-
         </div>
       </footer>
     </>

@@ -7,29 +7,41 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import * as yup from "yup";
 
-// ── ContactForm ────────────────────────────────────────────────────────────────
+interface ContactFormValues {
+  name: string;
+  email: string;
+  message: string;
+}
+
+const MESSAGE_MAX_LENGTH = 500;
+const MESSAGE_WARN_THRESHOLD = 450;
+
+// ── ContactForm ──────────────────────────────────────────────────────────────
 
 function ContactForm() {
-  const [submitted, setSubmitted] = useState(false);
-  const [error, setError] = useState("");
+  const [submitted, setSubmitted] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
 
   // Initialize EmailJS on component mount
   useEffect(() => {
     emailjs.init(process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || "");
   }, []);
 
-  const formik = useFormik({
+  const formik = useFormik<ContactFormValues>({
     initialValues: { name: "", email: "", message: "" },
     validationSchema: yup.object({
       name: yup.string().required("Name is required.").min(3, "Min 3 characters").max(100, "Max 100 characters"),
       email: yup.string().required("Email is required.").email("Enter a valid email"),
-      message: yup.string().required("Message is required.").min(15, "Min 15 characters").max(500, "Max 500 characters"),
+      message: yup
+        .string()
+        .required("Message is required.")
+        .min(15, "Min 15 characters")
+        .max(MESSAGE_MAX_LENGTH, `Max ${MESSAGE_MAX_LENGTH} characters`),
     }),
-    onSubmit: async (values) => {
+    onSubmit: async (values, { resetForm }) => {
       try {
         setError("");
-        
-        // Send email using EmailJS
+
         await emailjs.send(
           process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || "",
           process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || "",
@@ -41,7 +53,7 @@ function ContactForm() {
           }
         );
 
-        formik.resetForm();
+        resetForm();
         setSubmitted(true);
         setTimeout(() => setSubmitted(false), 4000);
       } catch (err) {
@@ -51,13 +63,16 @@ function ContactForm() {
     },
   });
 
+  const messageLength = formik.values.message.length;
+
   return (
     <form onSubmit={formik.handleSubmit} className="flex flex-col gap-5" noValidate>
       {/* Name + Email row */}
       <div className="flex lg:flex-row flex-col gap-5">
         <div className="w-full flex flex-col gap-1">
-          <label className="contact-label">Name *</label>
+          <label className="contact-label" htmlFor="contact-name">Name *</label>
           <input
+            id="contact-name"
             className={`contact-input ${formik.touched.name && formik.errors.name ? "contact-input-error" : ""}`}
             type="text"
             name="name"
@@ -71,8 +86,9 @@ function ContactForm() {
           )}
         </div>
         <div className="w-full flex flex-col gap-1">
-          <label className="contact-label">Email *</label>
+          <label className="contact-label" htmlFor="contact-email">Email *</label>
           <input
+            id="contact-email"
             className={`contact-input ${formik.touched.email && formik.errors.email ? "contact-input-error" : ""}`}
             type="email"
             name="email"
@@ -89,10 +105,12 @@ function ContactForm() {
 
       {/* Message */}
       <div className="flex flex-col gap-1">
-        <label className="contact-label">Message *</label>
+        <label className="contact-label" htmlFor="contact-message">Message *</label>
         <textarea
-          className={`contact-input resize-none ${formik.touched.message && formik.errors.message ? "contact-input-error" : ""}`}
-          style={{ height: 130 }}
+          id="contact-message"
+          className={`contact-input resize-none h-[130px] ${
+            formik.touched.message && formik.errors.message ? "contact-input-error" : ""
+          }`}
           name="message"
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
@@ -105,54 +123,49 @@ function ContactForm() {
           ) : (
             <span />
           )}
-          <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, color: formik.values.message.length > 450 ? "#f87171" : "#334155" }}>
-            {formik.values.message.length}/500
+          <span
+            className={`font-['DM_Sans'] text-xs ${
+              messageLength > MESSAGE_WARN_THRESHOLD ? "text-red-400" : "text-slate-700"
+            }`}
+          >
+            {messageLength}/{MESSAGE_MAX_LENGTH}
           </span>
         </div>
       </div>
 
       {/* Submit */}
       <div className="flex items-center gap-4 mt-1">
-        <button
-          type="submit"
-          className="contact-submit-btn"
-          disabled={formik.isSubmitting}
-        >
+        <button type="submit" className="contact-submit-btn" disabled={formik.isSubmitting}>
           {formik.isSubmitting ? (
             <span className="submit-spinner" />
           ) : (
             <>
-              Send Message <Send style={{ fontSize: 16 }} />
+              Send Message <Send className="text-base" />
             </>
           )}
         </button>
-        {submitted && (
-          <span className="success-msg">
-            ✓ Message sent!
-          </span>
-        )}
-        {error && (
-          <span style={{ color: "#ef4444", fontSize: 14 }}>
-            {error}
-          </span>
-        )}
+        {submitted && <span className="success-msg">✓ Message sent!</span>}
+        {error && <span className="text-red-500 text-sm">{error}</span>}
       </div>
     </form>
   );
 }
 
-// ── Contact section ────────────────────────────────────────────────────────────
+// ── Contact section ──────────────────────────────────────────────────────────
 
 export default function Contact() {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState<boolean>(false);
 
   useEffect(() => {
     const obs = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setVisible(true); },
+      ([entry]) => {
+        if (entry.isIntersecting) setVisible(true);
+      },
       { threshold: 0.08 }
     );
-    if (sectionRef.current) obs.observe(sectionRef.current);
+    const node = sectionRef.current;
+    if (node) obs.observe(node);
     return () => obs.disconnect();
   }, []);
 
@@ -220,9 +233,8 @@ export default function Contact() {
           backdrop-filter: blur(12px);
           transition: border-color 0.3s, transform 0.3s;
         }
-        .glass-card:hover {
-          border-color: rgba(99,216,165,0.15);
-        }
+        .glass-card:hover { border-color: rgba(99,216,165,0.15); }
+        .glass-card.accent-border { border-color: rgba(99,216,165,0.15); }
 
         /* Form inputs */
         .contact-label {
@@ -351,106 +363,124 @@ export default function Contact() {
       <section
         id="contact"
         ref={sectionRef}
-        className={`relative w-full lg:pt-28 pt-16 pb-24 overflow-hidden ${visible ? "contact-visible" : ""}`}
-        style={{ background: "linear-gradient(180deg, #0d1526 0%, #070c18 100%)" }}
+        className={`relative w-full lg:pt-28 pt-16 pb-24 overflow-hidden bg-gradient-to-b from-[#0d1526] to-[#070c18] ${
+          visible ? "contact-visible" : ""
+        }`}
       >
         {/* Background glow */}
-        <div className="absolute pointer-events-none" style={{
-          width: 500, height: 500,
-          bottom: "-80px", left: "50%", transform: "translateX(-50%)",
-          background: "radial-gradient(circle, rgba(99,216,165,0.05) 0%, transparent 70%)",
-          filter: "blur(70px)",
-        }} />
-        <div className="absolute inset-0 pointer-events-none opacity-[0.02]" style={{
-          backgroundImage: `linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px),
-                            linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)`,
-          backgroundSize: "60px 60px",
-        }} />
+        <div className="absolute pointer-events-none w-[340px] h-[340px] sm:w-[420px] sm:h-[420px] lg:w-[500px] lg:h-[500px] -bottom-20 left-1/2 -translate-x-1/2 bg-[radial-gradient(circle,rgba(99,216,165,0.05)_0%,transparent_70%)] blur-[70px]" />
+        <div className="absolute inset-0 pointer-events-none opacity-[0.02] bg-[linear-gradient(rgba(255,255,255,0.5)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.5)_1px,transparent_1px)] bg-[size:60px_60px]" />
 
-        <div className="relative z-10 max-w-5xl mx-auto px-6">
+        <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6">
           {/* Header */}
-          <div className="contact-header flex flex-col items-center gap-4 mb-16">
+          <div className="contact-header flex flex-col items-center gap-4 mb-12 sm:mb-16">
             <span className="section-label">
-              <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#63d8a5", display: "inline-block" }} />
+              <span className="w-1.5 h-1.5 rounded-full bg-[#63d8a5] inline-block" />
               Let&apos;s Talk
             </span>
-            <h2
-              className="contact-shimmer"
-              style={{ fontFamily: "'Syne', sans-serif", fontSize: "clamp(2rem, 5vw, 3rem)", fontWeight: 800, textAlign: "center", margin: 0 }}
-            >
+            <h2 className="contact-shimmer font-['Syne'] text-[clamp(2rem,5vw,3rem)] font-extrabold text-center m-0">
               Get In Touch
             </h2>
-            <div style={{ width: 40, height: 2, background: "linear-gradient(90deg, transparent, #63d8a5, transparent)", borderRadius: 2 }} />
-            <p style={{ fontFamily: "'DM Sans', sans-serif", color: "#475569", fontSize: 14, textAlign: "center", maxWidth: 440, lineHeight: 1.75, margin: 0 }}>
-              Have a project in mind or want to collaborate? I&apos;m open to frontend opportunities and freelance work. Let&apos;s build something great together.
+            <div className="w-10 h-0.5 bg-gradient-to-r from-transparent via-[#63d8a5] to-transparent rounded-sm" />
+            <p className="font-['DM_Sans'] text-slate-600 text-sm text-center max-w-[440px] leading-[1.75] m-0 px-2">
+              Have a project in mind or want to collaborate? I&apos;m open to frontend
+              opportunities and freelance work. Let&apos;s build something great together.
             </p>
           </div>
 
           {/* Two-column layout */}
-          <div className="grid lg:grid-cols-[1fr_1.6fr] gap-10 items-start">
-
+          <div className="grid lg:grid-cols-[1fr_1.6fr] gap-8 sm:gap-10 items-start">
             {/* Left — contact info */}
             <div className="contact-left flex flex-col gap-5">
-              <div className="glass-card p-6 flex flex-col gap-4">
-                <p style={{ fontFamily: "'Syne', sans-serif", color: "#e2e8f0", fontSize: 13, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", margin: 0 }}>
+              <div className="glass-card p-5 sm:p-6 flex flex-col gap-4">
+                <p className="font-['Syne'] text-slate-200 text-[13px] font-bold tracking-[0.08em] uppercase m-0">
                   Contact Info
                 </p>
 
                 {/* Email */}
-                <Link href="mailto:mahantasasmita326@gmail.com" className="info-row" style={{ textDecoration: "none" }}>
-                  <div className="info-icon"><MailOutline fontSize="small" /></div>
+                <Link
+                  href="mailto:mahantasasmita326@gmail.com"
+                  className="info-row no-underline"
+                >
+                  <div className="info-icon">
+                    <MailOutline fontSize="small" />
+                  </div>
                   <div>
-                    <p style={{ fontFamily: "'Syne', sans-serif", color: "#94a3b8", fontSize: 11, fontWeight: 600, letterSpacing: "0.06em", textTransform: "uppercase", margin: "0 0 2px" }}>Email</p>
-                    <p style={{ fontFamily: "'DM Sans', sans-serif", color: "#63d8a5", fontSize: 13, fontWeight: 400, margin: 0 }}>mahantasasmita326@gmail.com</p>
+                    <p className="font-['Syne'] text-slate-400 text-[11px] font-semibold tracking-[0.06em] uppercase m-0 mb-0.5">
+                      Email
+                    </p>
+                    <p className="font-['DM_Sans'] text-[#63d8a5] text-[13px] font-normal m-0">
+                      mahantasasmita326@gmail.com
+                    </p>
                   </div>
                 </Link>
 
                 {/* Phone */}
-                <Link href="tel:+917008289045" className="info-row" style={{ textDecoration: "none" }}>
-                  <div className="info-icon" style={{ fontSize: 16 }}>📞</div>
+                <Link href="tel:+917008289045" className="info-row no-underline">
+                  <div className="info-icon text-base">📞</div>
                   <div>
-                    <p style={{ fontFamily: "'Syne', sans-serif", color: "#94a3b8", fontSize: 11, fontWeight: 600, letterSpacing: "0.06em", textTransform: "uppercase", margin: "0 0 2px" }}>Phone</p>
-                    <p style={{ fontFamily: "'DM Sans', sans-serif", color: "#e2e8f0", fontSize: 13, fontWeight: 400, margin: 0 }}>+91-70082-89045</p>
+                    <p className="font-['Syne'] text-slate-400 text-[11px] font-semibold tracking-[0.06em] uppercase m-0 mb-0.5">
+                      Phone
+                    </p>
+                    <p className="font-['DM_Sans'] text-slate-200 text-[13px] font-normal m-0">
+                      +91-70082-89045
+                    </p>
                   </div>
                 </Link>
 
                 {/* Location */}
                 <div className="info-row">
-                  <div className="info-icon"><LocationOn fontSize="small" /></div>
+                  <div className="info-icon">
+                    <LocationOn fontSize="small" />
+                  </div>
                   <div>
-                    <p style={{ fontFamily: "'Syne', sans-serif", color: "#94a3b8", fontSize: 11, fontWeight: 600, letterSpacing: "0.06em", textTransform: "uppercase", margin: "0 0 2px" }}>Location</p>
-                    <p style={{ fontFamily: "'DM Sans', sans-serif", color: "#e2e8f0", fontSize: 13, fontWeight: 400, margin: 0 }}>Odisha, India · Open to Remote</p>
+                    <p className="font-['Syne'] text-slate-400 text-[11px] font-semibold tracking-[0.06em] uppercase m-0 mb-0.5">
+                      Location
+                    </p>
+                    <p className="font-['DM_Sans'] text-slate-200 text-[13px] font-normal m-0">
+                      Odisha, India · Open to Remote
+                    </p>
                   </div>
                 </div>
               </div>
 
               {/* Social links */}
               <div className="glass-card p-5 flex flex-col gap-4">
-                <p style={{ fontFamily: "'Syne', sans-serif", color: "#e2e8f0", fontSize: 13, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", margin: 0 }}>
+                <p className="font-['Syne'] text-slate-200 text-[13px] font-bold tracking-[0.08em] uppercase m-0">
                   Find Me Online
                 </p>
                 <div className="flex flex-wrap gap-3">
-                  <Link href="https://www.linkedin.com/in/sasmita-mahanta-7b24801a7/" target="_blank" className="social-btn">
-                    <LinkedIn style={{ fontSize: 18 }} /> LinkedIn
+                  <Link
+                    href="https://www.linkedin.com/in/sasmita-mahanta-7b24801a7/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="social-btn"
+                  >
+                    <LinkedIn className="text-lg" /> LinkedIn
                   </Link>
-                  <Link href="https://github.com/Coader-Sasmi" target="_blank" className="social-btn">
-                    <GitHub style={{ fontSize: 18 }} /> GitHub
+                  <Link
+                    href="https://github.com/Coader-Sasmi"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="social-btn"
+                  >
+                    <GitHub className="text-lg" /> GitHub
                   </Link>
                 </div>
               </div>
 
               {/* Availability note */}
-              <div
-                className="glass-card p-5 flex items-start gap-4"
-                style={{ borderColor: "rgba(99,216,165,0.15)" }}
-              >
-                <div style={{ width: 36, height: 36, borderRadius: 10, flexShrink: 0, background: "rgba(99,216,165,0.1)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 16 }}>
+              <div className="glass-card accent-border p-5 flex items-start gap-4">
+                <div className="w-9 h-9 rounded-[10px] shrink-0 bg-[rgba(99,216,165,0.1)] flex items-center justify-center text-base">
                   🟢
                 </div>
                 <div>
-                  <p style={{ fontFamily: "'Syne', sans-serif", color: "#63d8a5", fontSize: 13, fontWeight: 700, margin: "0 0 4px", letterSpacing: "0.04em" }}>Available for Work</p>
-                  <p style={{ fontFamily: "'DM Sans', sans-serif", color: "#475569", fontSize: 13, lineHeight: 1.6, margin: 0 }}>
-                    Open to full-time frontend roles and freelance projects. Response within 24 hours.
+                  <p className="font-['Syne'] text-[#63d8a5] text-[13px] font-bold tracking-[0.04em] m-0 mb-1">
+                    Available for Work
+                  </p>
+                  <p className="font-['DM_Sans'] text-slate-600 text-[13px] leading-[1.6] m-0">
+                    Open to full-time frontend roles and freelance projects. Response within
+                    24 hours.
                   </p>
                 </div>
               </div>
@@ -458,18 +488,21 @@ export default function Contact() {
 
             {/* Right — form */}
             <div className="contact-right">
-              <div className="glass-card p-7 flex flex-col gap-2">
+              <div className="glass-card p-5 sm:p-7 flex flex-col gap-2">
                 <div className="flex items-start gap-3 mb-4">
-                  <div className="accent-line" style={{ height: 36 }} />
+                  <div className="accent-line h-9" />
                   <div>
-                    <p style={{ fontFamily: "'Syne', sans-serif", color: "#e2e8f0", fontSize: 15, fontWeight: 700, margin: 0 }}>Send a Message</p>
-                    <p style={{ fontFamily: "'DM Sans', sans-serif", color: "#475569", fontSize: 13, margin: "2px 0 0" }}>I&apos;ll get back to you as soon as possible.</p>
+                    <p className="font-['Syne'] text-slate-200 text-[15px] font-bold m-0">
+                      Send a Message
+                    </p>
+                    <p className="font-['DM_Sans'] text-slate-600 text-[13px] m-0 mt-0.5">
+                      I&apos;ll get back to you as soon as possible.
+                    </p>
                   </div>
                 </div>
                 <ContactForm />
               </div>
             </div>
-
           </div>
         </div>
       </section>

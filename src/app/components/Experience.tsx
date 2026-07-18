@@ -12,22 +12,23 @@ interface ExperienceItem {
   bullets: string[];
 }
 
-const experiencesData: ExperienceItem[] = [
-  {
+const EXPERIENCES: readonly ExperienceItem[] = [
+{
     title: "Front-End Developer",
     company: "Netsqure",
     location: "Bangalore (Remote)",
     date: "Feb 2025 – Present",
     type: "Full-time",
     description:
-      "Architected an Event Management Platform (React.js + Vite) serving 3,000+ users with multi - tenant RBAC — improving rendering by 30% and load time by 20%.Built a Next.js E- Commerce Admin Panel and developed 15 + production WordPress websites for clients.",
+      "Architected a multi-tenant SaaS dashboard platform with per-organization JSON-driven theming, serving 3,000+ users with role-based access control — improving rendering by 30% and load time by 20%. Built a Next.js E-Commerce Admin Panel and developed 15+ production WordPress websites for clients.",
     bullets: [
-      "Architected Event Management Platform (3,000+ users, 15+ admins) using React.js + Vite + Redux Toolkit + SWR",
-      "Designed multi-tenant RBAC dashboard with modular feature isolation",
+      "Architected a multi-tenant SaaS dashboard (3,000+ users, 15+ admins) with dynamic [companyId] routing and JSON-driven theming per organization",
+      "Built a Zustand-powered CMS visual editor module for in-dashboard content management",
+      "Implemented Redux Toolkit auth flows using createAsyncThunk for token handling and session state",
       "Improved rendering by 30% and load time by 20% via code-splitting, lazy loading & SWR caching",
       "Built real-time calendar with concurrent scheduling conflict handling",
       "Built E-Commerce Admin Panel using Next.js with product management, order tracking and RBAC workflows",
-      "Developed and deployed 15+ production WordPress websites including custom theme development and plugin integration"
+      "Developed and deployed 15+ production WordPress websites including custom theme development and plugin integration",
     ],
   },
   {
@@ -64,14 +65,17 @@ const experiencesData: ExperienceItem[] = [
 
 export default function Experience() {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState<boolean>(false);
 
   useEffect(() => {
     const obs = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setVisible(true); },
+      ([entry]) => {
+        if (entry.isIntersecting) setVisible(true);
+      },
       { threshold: 0.08 }
     );
-    if (sectionRef.current) obs.observe(sectionRef.current);
+    const node = sectionRef.current;
+    if (node) obs.observe(node);
     return () => obs.disconnect();
   }, []);
 
@@ -101,8 +105,8 @@ export default function Experience() {
           50%       { box-shadow: 0 0 0 7px rgba(99,216,165,0); }
         }
 
-        .exp-visible .exp-header  { animation: fadeUp 0.7s cubic-bezier(.22,.68,0,1.2) 0.05s both; }
-        .exp-visible .exp-card    { animation: fadeUp 0.6s cubic-bezier(.22,.68,0,1.2) both; }
+        .exp-visible .exp-header    { animation: fadeUp 0.7s cubic-bezier(.22,.68,0,1.2) 0.05s both; }
+        .exp-visible .exp-card      { animation: fadeUp 0.6s cubic-bezier(.22,.68,0,1.2) both; }
         .exp-visible .timeline-line { animation: line-grow 1.2s cubic-bezier(.22,.68,0,1.2) 0.3s both; }
         .exp-visible .timeline-dot  { animation: dot-pop 0.5s cubic-bezier(.22,.68,0,1.2) both; }
 
@@ -221,37 +225,26 @@ export default function Experience() {
       <section
         id="experience"
         ref={sectionRef}
-        className={`relative w-full lg:pt-28 pt-16 pb-24 overflow-hidden ${visible ? "exp-visible" : ""}`}
-        style={{ background: "linear-gradient(180deg, #0d1526 0%, #070c18 100%)" }}
+        className={`relative w-full lg:pt-28 pt-16 pb-24 overflow-hidden bg-gradient-to-b from-[#0d1526] to-[#070c18] ${
+          visible ? "exp-visible" : ""
+        }`}
       >
         {/* Background glow */}
-        <div className="absolute pointer-events-none" style={{
-          width: 500, height: 400, bottom: "10%", right: "-80px",
-          background: "radial-gradient(circle, rgba(99,216,165,0.04) 0%, transparent 70%)",
-          filter: "blur(60px)",
-        }} />
-        <div className="absolute inset-0 pointer-events-none opacity-[0.02]" style={{
-          backgroundImage: `linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px),
-                            linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)`,
-          backgroundSize: "60px 60px",
-        }} />
+        <div className="absolute pointer-events-none w-[500px] h-[400px] bottom-[10%] right-[-80px] bg-[radial-gradient(circle,rgba(99,216,165,0.04)_0%,transparent_70%)] blur-[60px]" />
+        <div className="absolute inset-0 pointer-events-none opacity-[0.02] bg-[size:60px_60px] bg-[linear-gradient(rgba(255,255,255,0.5)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.5)_1px,transparent_1px)]" />
 
         <div className="relative z-10 max-w-4xl mx-auto px-6">
           {/* Header */}
           <div className="exp-header flex flex-col items-center gap-4 mb-16">
             <span className="section-label">
-              <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#63d8a5", display: "inline-block" }} />
+              <span className="w-1.5 h-1.5 rounded-full bg-[#63d8a5] inline-block" />
               My Journey
             </span>
-            <h2 className="exp-shimmer" style={{
-              fontFamily: "'Syne', sans-serif",
-              fontSize: "clamp(2rem, 5vw, 3rem)",
-              fontWeight: 800, textAlign: "center", margin: 0,
-            }}>
+            <h2 className="exp-shimmer font-['Syne'] text-[clamp(2rem,5vw,3rem)] font-extrabold text-center m-0">
               Experience
             </h2>
-            <div style={{ width: 40, height: 2, background: "linear-gradient(90deg, transparent, #63d8a5, transparent)", borderRadius: 2 }} />
-            <p style={{ fontFamily: "'DM Sans', sans-serif", color: "#475569", fontSize: 14, textAlign: "center", maxWidth: 400, lineHeight: 1.7, margin: 0 }}>
+            <div className="w-10 h-0.5 bg-gradient-to-r from-transparent via-[#63d8a5] to-transparent rounded-sm" />
+            <p className="font-['DM_Sans'] text-slate-600 text-sm text-center max-w-[400px] leading-[1.7] m-0">
               Roles and milestones that have shaped my craft
             </p>
           </div>
@@ -259,25 +252,22 @@ export default function Experience() {
           {/* Timeline */}
           <div className="relative flex flex-col">
             {/* Vertical line */}
-            <div className="absolute left-[19px] top-2 bottom-2 w-px overflow-hidden" style={{ background: "rgba(255,255,255,0.04)" }}>
-              <div
-                className="timeline-line w-full"
-                style={{ background: "linear-gradient(180deg, #63d8a5, rgba(99,216,165,0.2))", transformOrigin: "top" }}
-              />
+            <div className="absolute left-[19px] top-2 bottom-2 w-px overflow-hidden bg-white/[0.04]">
+              <div className="timeline-line w-full origin-top bg-[linear-gradient(180deg,#63d8a5,rgba(99,216,165,0.2))]" />
             </div>
 
             <div className="flex flex-col gap-8">
-              {experiencesData.map((item, i) => (
+              {EXPERIENCES.map((item, i) => (
                 <div
-                  key={i}
+                  key={`${item.company}-${item.title}`}
                   className="exp-card flex gap-5 items-start ml-10"
                   style={{ animationDelay: `${i * 120 + 200}ms` }}
                 >
                   {/* Dot — sits over the line */}
-                  <div
-                    className="timeline-dot absolute"
-                    style={{ left: "13px", marginTop: "28px", animationDelay: `${i * 120 + 300}ms` }}
-                  />
+                  {/* <div
+                    className="timeline-dot absolute left-[13px] mt-7"
+                    style={{ animationDelay: `${i * 120 + 300}ms` }}
+                  /> */}
 
                   <div className="card-glow" />
 
@@ -289,35 +279,29 @@ export default function Experience() {
                         <span className="type-pill">{item.type}</span>
                       </div>
                       <span className="company-tag">
-                        <span style={{ width: 4, height: 4, borderRadius: "50%", background: "#475569", display: "inline-block" }} />
+                        <span className="w-1 h-1 rounded-full bg-slate-600 inline-block" />
                         {item.company} · {item.location}
                       </span>
                     </div>
 
                     {/* Title */}
-                    <h3 style={{
-                      fontFamily: "'Syne', sans-serif",
-                      fontSize: 17, fontWeight: 700,
-                      color: "#e2e8f0", margin: 0, lineHeight: 1.3,
-                    }}>
+                    <h3 className="font-['Syne'] text-[17px] font-bold text-slate-200 m-0 leading-[1.3]">
                       {item.title}
                     </h3>
 
                     {/* Description */}
-                    <p style={{
-                      fontFamily: "'DM Sans', sans-serif",
-                      fontSize: 14, color: "#64748b",
-                      lineHeight: 1.75, margin: 0, fontWeight: 300,
-                    }}>
+                    <p className="font-['DM_Sans'] text-sm text-slate-500 leading-[1.75] m-0 font-light">
                       {item.description}
                     </p>
 
                     {/* Bullets */}
-                    <ul style={{ margin: "4px 0 0", padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 6 }}>
-                      {item.bullets.map((b, j) => (
-                        <li key={j} style={{ display: "flex", alignItems: "flex-start", gap: 8 }}>
-                          <span style={{ width: 5, height: 5, borderRadius: "50%", background: "rgba(99,216,165,0.4)", flexShrink: 0, marginTop: 7 }} />
-                          <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: "#475569", lineHeight: 1.65 }}>{b}</span>
+                    <ul className="mt-1 p-0 list-none flex flex-col gap-1.5">
+                      {item.bullets.map((bullet) => (
+                        <li key={bullet} className="flex items-start gap-2">
+                          <span className="w-[5px] h-[5px] rounded-full bg-[rgba(99,216,165,0.4)] shrink-0 mt-[7px]" />
+                          <span className="font-['DM_Sans'] text-[13px] text-slate-600 leading-[1.65]">
+                            {bullet}
+                          </span>
                         </li>
                       ))}
                     </ul>
