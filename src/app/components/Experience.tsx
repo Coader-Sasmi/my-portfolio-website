@@ -13,55 +13,56 @@ interface ExperienceItem {
 }
 
 const EXPERIENCES: readonly ExperienceItem[] = [
-{
-    title: "Front-End Developer",
+  {
+    title: "Frontend Engineer",
     company: "Netsqure",
-    location: "Bangalore (Remote)",
+    location: "Bangalore, India (Remote)",
     date: "Feb 2025 – Present",
     type: "Full-time",
     description:
-      "Architected a multi-tenant SaaS dashboard platform with per-organization JSON-driven theming, serving 3,000+ users with role-based access control — improving rendering by 30% and load time by 20%. Built a Next.js E-Commerce Admin Panel and developed 15+ production WordPress websites for clients.",
+      "Architected a performance-optimized multi-tenant SaaS dashboard platform, enhancing rendering speed by 30% through optimized caching and lazy-loading.",
     bullets: [
-      "Architected a multi-tenant SaaS dashboard (3,000+ users, 15+ admins) with dynamic [companyId] routing and JSON-driven theming per organization",
-      "Built a Zustand-powered CMS visual editor module for in-dashboard content management",
-      "Implemented Redux Toolkit auth flows using createAsyncThunk for token handling and session state",
-      "Improved rendering by 30% and load time by 20% via code-splitting, lazy loading & SWR caching",
-      "Built real-time calendar with concurrent scheduling conflict handling",
-      "Built E-Commerce Admin Panel using Next.js with product management, order tracking and RBAC workflows",
-      "Developed and deployed 15+ production WordPress websites including custom theme development and plugin integration",
+      "Built a scalable SaaS dashboard for 3,000+ users with dynamic layout engines and role-based access.",
+      "Developed a Zustand-powered visual editor for in-dashboard layout customization.",
+      "Engineered Redux Toolkit authorization with secure token handling.",
+      "Improved Core Web Vitals by 30% via code-splitting, SWR caching, and bundle optimization.",
+      "Built a real-time responsive scheduler with optimistic updates.",
+      "Developed E-Commerce analytics panels using Next.js for inventory and order management.",
+      "Led frontend delivery of large-scale responsive Tailwind CSS layouts."
     ],
   },
   {
-    title: "Front-End Developer",
+    title: "Independent Software Consultant",
     company: "Freelance & Contract",
     location: "Odisha, India (Remote)",
     date: "Apr 2024 – Feb 2025",
-    type: "Freelance",
+    type: "Contract",
     description:
-      "Delivered production projects for real clients — a multi-category E-Commerce platform and an interior design agency website. Managed end-to-end delivery from client requirements to Vercel deployment.",
+      "Delivered production-grade, high-performance apps for fintech and e-commerce, owning the full-stack architecture and automated Vercel deployment.",
     bullets: [
-      "Delivered Limited Cart — multi-category E-Commerce platform with cart management, gender-based filtering, and responsive UI",
-      "Built Elite Work — production website for Bangalore-based interior design agency serving real clients",
-      "Implemented search, filtering & pagination for 10,000+ records",
-      "Managed end-to-end delivery from requirement gathering to deployment",
+      "Developed 'Dalal Street' (SEBI-registered app) with secure payment gateways and TypeScript validation.",
+      "Built 'Limited Cart' e-commerce platform featuring complex state management and product filtering.",
+      "Optimized large-scale tables handling 10,000+ rows with debounce search and client-side pagination.",
+      "Managed full development lifecycle from architectural design to automated Vercel CI/CD pipelines."
     ],
   },
   {
-    title: "Front-End Developer",
+    title: "Frontend Engineer",
     company: "Searching Yard Group",
     location: "Odisha, India",
     date: "Jun 2022 – Mar 2024",
     type: "Full-time",
     description:
-      "Built scalable dashboards for HRMS, CRM, and E-Commerce platforms using React & TypeScript. Reduced frontend load time by 20% through performance optimization and designed secure role-based workflows.",
+      "Developed high-volume HRMS/CRM dashboards, optimizing performance by 20% through Vite migration and improving data grid handling.",
     bullets: [
-      "Designed reusable component systems with React & TypeScript",
-      "Reduced frontend load time by 20% via performance optimization",
-      "Handled large datasets (10k+ records) with pagination, filtering & search",
-      "Implemented secure authentication and role-based access across internal systems",
+      "Created modular, strongly-typed component libraries to enhance reusability.",
+      "Improved development speed by 20% via Vite migration and build optimization.",
+      "Managed 10,000+ row datasets with memoized filtering and pagination.",
+      "Implemented role-based security and cross-domain authentication systems."
     ],
   },
 ];
+
 
 export default function Experience() {
   const sectionRef = useRef<HTMLDivElement>(null);

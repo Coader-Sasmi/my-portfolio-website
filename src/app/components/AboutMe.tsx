@@ -13,15 +13,15 @@ interface MetricItem {
 }
 
 const SKILLS: readonly Skill[] = [
+  { name: "Next.js", level: 95 },
+  { name: "TypeScript", level: 95 },
   { name: "React.js", level: 95 },
-  { name: "TypeScript", level: 92 },
-  { name: "Next.js", level: 94 },
   { name: "JavaScript (ES6+)", level: 95 },
-  { name: "Redux Toolkit", level: 88 },
-  { name: "Tailwind CSS / MUI", level: 92 },
-  { name: "REST APIs & SWR", level: 87 },
-  { name: "WordPress", level: 90 },
-  { name: "Node.js / Express", level: 65 },
+  { name: "Redux Toolkit", level: 90 },
+  { name: "Tailwind CSS / MUI", level: 90 },
+  { name: "REST APIs & SWR", level: 90 },
+  { name: "WordPress", level: 85 },
+  { name: "Node.js / Express", level: 70 },
 ];
 
 const TAGS: readonly string[] = [

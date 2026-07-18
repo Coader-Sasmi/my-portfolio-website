@@ -66,88 +66,126 @@ function ContactForm() {
   const messageLength = formik.values.message.length;
 
   return (
-    <form onSubmit={formik.handleSubmit} className="flex flex-col gap-5" noValidate>
-      {/* Name + Email row */}
-      <div className="flex lg:flex-row flex-col gap-5">
-        <div className="w-full flex flex-col gap-1">
-          <label className="contact-label" htmlFor="contact-name">Name *</label>
-          <input
-            id="contact-name"
-            className={`contact-input ${formik.touched.name && formik.errors.name ? "contact-input-error" : ""}`}
-            type="text"
-            name="name"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.name}
-            placeholder="Jane Doe"
-          />
-          {formik.touched.name && formik.errors.name && (
-            <span className="contact-error">{formik.errors.name}</span>
-          )}
-        </div>
-        <div className="w-full flex flex-col gap-1">
-          <label className="contact-label" htmlFor="contact-email">Email *</label>
-          <input
-            id="contact-email"
-            className={`contact-input ${formik.touched.email && formik.errors.email ? "contact-input-error" : ""}`}
-            type="email"
-            name="email"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.email}
-            placeholder="jane@example.com"
-          />
-          {formik.touched.email && formik.errors.email && (
-            <span className="contact-error">{formik.errors.email}</span>
-          )}
-        </div>
-      </div>
+<form onSubmit={formik.handleSubmit} className="flex flex-col gap-5 w-full max-w-2xl mx-auto" noValidate>
+  {/* Name + Email row */}
+  <div className="flex flex-col lg:flex-row gap-5">
+    {/* Name Input Grid Field */}
+    <div className="w-full flex flex-col gap-1.5">
+      <label className="font-['Syne'] text-xs font-bold tracking-widest text-[#94a3b8] uppercase" htmlFor="contact-name">
+        Name *
+      </label>
+      <input
+        id="contact-name"
+        className={`w-full font-['DM_Sans'] text-sm text-white placeholder-slate-600 bg-[rgba(255,255,255,0.02)] border rounded-xl px-4 py-3 outline-none backdrop-blur-md transition-all duration-200 ${
+          formik.touched.name && formik.errors.name
+            ? "border-red-500/50 bg-red-500/5 shadow-[0_0_12px_rgba(239,68,68,0.1)] focus:border-red-500"
+            : "border-[rgba(255,255,255,0.08)] hover:border-[rgba(255,255,255,0.15)] focus:border-[#63d8a5] focus:bg-[rgba(255,255,255,0.04)] focus:shadow-[0_0_12px_rgba(99,216,165,0.1)]"
+        }`}
+        type="text"
+        name="name"
+        onChange={formik.handleChange}
+        onBlur={formik.handleBlur}
+        value={formik.values.name}
+        placeholder="Jane Doe"
+      />
+      {formik.touched.name && formik.errors.name && (
+        <span className="font-['DM_Sans'] text-xs font-medium text-red-400 mt-0.5 pl-1">
+          {formik.errors.name}
+        </span>
+      )}
+    </div>
 
-      {/* Message */}
-      <div className="flex flex-col gap-1">
-        <label className="contact-label" htmlFor="contact-message">Message *</label>
-        <textarea
-          id="contact-message"
-          className={`contact-input resize-none h-[130px] ${
-            formik.touched.message && formik.errors.message ? "contact-input-error" : ""
-          }`}
-          name="message"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.message}
-          placeholder="Tell me about your project or just say hi..."
-        />
-        <div className="flex justify-between items-center">
-          {formik.touched.message && formik.errors.message ? (
-            <span className="contact-error">{formik.errors.message}</span>
-          ) : (
-            <span />
-          )}
-          <span
-            className={`font-['DM_Sans'] text-xs ${
-              messageLength > MESSAGE_WARN_THRESHOLD ? "text-red-400" : "text-slate-700"
-            }`}
-          >
-            {messageLength}/{MESSAGE_MAX_LENGTH}
-          </span>
-        </div>
-      </div>
+    {/* Email Input Grid Field */}
+    <div className="w-full flex flex-col gap-1.5">
+      <label className="font-['Syne'] text-xs font-bold tracking-widest text-[#94a3b8] uppercase" htmlFor="contact-email">
+        Email *
+      </label>
+      <input
+        id="contact-email"
+        className={`w-full font-['DM_Sans'] text-sm text-white placeholder-slate-600 bg-[rgba(255,255,255,0.02)] border rounded-xl px-4 py-3 outline-none backdrop-blur-md transition-all duration-200 ${
+          formik.touched.email && formik.errors.email
+            ? "border-red-500/50 bg-red-500/5 shadow-[0_0_12px_rgba(239,68,68,0.1)] focus:border-red-500"
+            : "border-[rgba(255,255,255,0.08)] hover:border-[rgba(255,255,255,0.15)] focus:border-[#63d8a5] focus:bg-[rgba(255,255,255,0.04)] focus:shadow-[0_0_12px_rgba(99,216,165,0.1)]"
+        }`}
+        type="email"
+        name="email"
+        onChange={formik.handleChange}
+        onBlur={formik.handleBlur}
+        value={formik.values.email}
+        placeholder="jane@example.com"
+      />
+      {formik.touched.email && formik.errors.email && (
+        <span className="font-['DM_Sans'] text-xs font-medium text-red-400 mt-0.5 pl-1">
+          {formik.errors.email}
+        </span>
+      )}
+    </div>
+  </div>
 
-      {/* Submit */}
-      <div className="flex items-center gap-4 mt-1">
-        <button type="submit" className="contact-submit-btn" disabled={formik.isSubmitting}>
-          {formik.isSubmitting ? (
-            <span className="submit-spinner" />
-          ) : (
-            <>
-              Send Message <Send className="text-base" />
-            </>
-          )}
-        </button>
-        {submitted && <span className="success-msg">✓ Message sent!</span>}
-        {error && <span className="text-red-500 text-sm">{error}</span>}
-      </div>
-    </form>
+  {/* Message Textarea Container */}
+  <div className="flex flex-col gap-1.5">
+    <label className="font-['Syne'] text-xs font-bold tracking-widest text-[#94a3b8] uppercase" htmlFor="contact-message">
+      Message *
+    </label>
+    <textarea
+      id="contact-message"
+      className={`w-full h-[130px] resize-none font-['DM_Sans'] text-sm text-white placeholder-slate-600 bg-[rgba(255,255,255,0.02)] border rounded-xl px-4 py-3 outline-none backdrop-blur-md transition-all duration-200 ${
+        formik.touched.message && formik.errors.message
+          ? "border-red-500/50 bg-red-500/5 shadow-[0_0_12px_rgba(239,68,68,0.1)] focus:border-red-500"
+          : "border-[rgba(255,255,255,0.08)] hover:border-[rgba(255,255,255,0.15)] focus:border-[#63d8a5] focus:bg-[rgba(255,255,255,0.04)] focus:shadow-[0_0_12px_rgba(99,216,165,0.1)]"
+      }`}
+      name="message"
+      onChange={formik.handleChange}
+      onBlur={formik.handleBlur}
+      value={formik.values.message}
+      placeholder="Tell me about your project or just say hi..."
+    />
+    <div className="flex justify-between items-center mt-0.5 px-1">
+      {formik.touched.message && formik.errors.message ? (
+        <span className="font-['DM_Sans'] text-xs font-medium text-red-400">
+          {formik.errors.message}
+        </span>
+      ) : (
+        <span />
+      )}
+      <span
+        className={`font-['DM_Sans'] text-[11px] font-medium tracking-wide ${
+          messageLength > MESSAGE_WARN_THRESHOLD ? "text-red-400" : "text-slate-600"
+        }`}
+      >
+        {messageLength}/{MESSAGE_MAX_LENGTH}
+      </span>
+    </div>
+  </div>
+
+  {/* Action Submit Control Layout */}
+  <div className="flex items-center gap-4 mt-2">
+    <button
+      type="submit"
+      className="relative inline-flex items-center justify-center gap-2 font-['DM_Sans'] text-sm font-semibold text-[#0a0f1a] bg-[#63d8a5] hover:bg-[#4ed095] disabled:bg-slate-800 disabled:text-slate-500 disabled:cursor-not-allowed px-6 py-3 rounded-full transition-all duration-200 shadow-md shadow-[rgba(99,216,165,0.1)] transform active:scale-95 shrink-0"
+      disabled={formik.isSubmitting}
+    >
+      {formik.isSubmitting ? (
+        <span className="w-4 h-4 rounded-full border-2 border-slate-500 border-t-white animate-spin block" />
+      ) : (
+        <>
+          Send Message <Send className="text-base" />
+        </>
+      )}
+    </button>
+    {submitted && (
+      <span className="font-['DM_Sans'] text-sm font-semibold text-[#63d8a5] animate-fade-in pl-1">
+        ✓ Message sent!
+      </span>
+    )}
+    {error && (
+      <span className="font-['DM_Sans'] text-sm font-medium text-red-400 animate-fade-in pl-1">
+        {error}
+      </span>
+    )}
+  </div>
+</form>
+
   );
 }
 
